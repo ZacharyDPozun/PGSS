@@ -15,7 +15,7 @@ from numpy import random
 from ase import io, optimize, md, units
 from ase.optimize import FIRE
 from ase.io.trajectory import PickleTrajectory
-from ase.md import VelocityVerlet
+
 
 ######################################################
 # Now we are going to define a few key functions     #
