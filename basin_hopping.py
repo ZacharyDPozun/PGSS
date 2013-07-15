@@ -7,15 +7,24 @@
 # The next thing we do is import all of the         #
 # important python libraries that we will need      #
 #####################################################
+
 import ase
 import tsase
 from qsc import QSC
 import numpy
 from numpy import random
-from ase import io, optimize, md, units
+from ase import io, optimize, md, units, Atoms
 from ase.optimize import FIRE
 from ase.io.trajectory import PickleTrajectory
-from commonfunctions import *
+from ase.md import VelocityVerlet
+from scipy import stats
+import random
+import operator
+from matplotlib import pyplot
+import pylab
+from mpl_toolkits.mplot3d import Axes3D
+
+
 
 ######################################################
 # Now we are going to define a few key functions     #
