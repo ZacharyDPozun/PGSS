@@ -11,6 +11,36 @@ from ase.md import VelocityVerlet
 from basin_hopping import *
 from simulated_annealing import *
 
+def create_sample_atom(inNumberOfAtoms,inAtomType):
+  """Creates a mostly spherical atom with inNumberOfAtoms atoms
+  and all of element inAtomType.  inAtomType MUST BE A STRING.
+  For example, 'Pt79' for Platinum and 79 atoms."""
+  positionList = []
+  halfOfRadius = 3
+  standardDeviation = 1.65
+  for x in range(0,inNumberOfAtoms):
+    atomX = random.gauss(halfOfRadius,standardDeviation)*random.choice([-1,1])
+    atomY = random.gauss(halfOfRadius,standardDeviation)*random.choice([-1,1])
+    atomZ = random.gauss(halfOfRadius,standardDeviation)*random.choice([-1,1])
+    positionList.append((atomX,atomY,atomZ))
+  sample_atom = Atoms(inAtomType,numpy.asarray(positionList))
+  return sample_atom
+  
+def nearlySphericalAtom(definingString,inRadius,number):
+  """definingString should be something like " 'Pt80' ", for example.
+  inRadius should be the radius that you wish to have for the atom.
+  number should be the number of atoms that will be in the molecule."""
+  positionList = []
+  for x in range(number):
+    xDistance = random.uniform(0,inRadius)*random.choice([-1,1])
+    remainingX = ((inRadius**2) - (xDistance**2))**0.5
+    yDistance = random.uniform(0,remainingX)*random.choice([-1,1])
+    zDistance = (((remainingX**2) - (yDistance**2))**0.5) + random.gauss(0,0.1)
+    coordinates = (xDistance,yDistance,zDistance)
+    positionList.append(coordinates)
+  newAtom = Atoms(definingString,positionList)
+  return newAtom
+
 def makeBimetallic(filename,numberAtoms,element1,element2,fractionElement1):
         atoms = ase.io.read(filename,format='vasp')
 	for i in range(numberAtoms, len(atoms)):
@@ -50,17 +80,4 @@ def visualize_atom(inAtom):
   ax.scatter(xList,yList,zList)
   pyplot.show()
 
-def create_sample_atom(inNumberOfAtoms,inAtomType):
-  """Creates a mostly spherical atom with inNumberOfAtoms atoms
-  and all of element inAtomType.  inAtomType MUST BE A STRING.
-  For example, 'Pt79' for Platinum and 79 atoms."""
-  positionList = []
-  halfOfRadius = 3
-  standardDeviation = 1.65
-  for x in range(0,inNumberOfAtoms):
-    atomX = random.gauss(halfOfRadius,standardDeviation)*random.choice([-1,1])
-    atomY = random.gauss(halfOfRadius,standardDeviation)*random.choice([-1,1])
-    atomZ = random.gauss(halfOfRadius,standardDeviation)*random.choice([-1,1])
-    positionList.append((atomX,atomY,atomZ))
-  sample_atom = Atoms(inAtomType,numpy.asarray(positionList))
-  return sample_atom
+
