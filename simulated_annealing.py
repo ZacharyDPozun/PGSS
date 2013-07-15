@@ -7,6 +7,9 @@
 # The next thing we do is import all of the         #
 # important python libraries that we will need      #
 #####################################################
+
+from basin_hopping import *
+from commonfunctions import *
 import ase
 import tsase
 from qsc import QSC
