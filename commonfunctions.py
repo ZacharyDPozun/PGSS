@@ -2,7 +2,12 @@ import ase
 import tsase
 from qsc import QSC
 import numpy
-from ase import io
+import random
+from numpy import random
+from ase import io, optimize, md, units, Atoms
+from ase.optimize import FIRE
+from ase.io.trajectory import PickleTrajectory
+from ase.md import VelocityVerlet
 
 def makeBimetallic(filename,numberAtoms,element1,element2,fractionElement1):
         atoms = ase.io.read(filename,format='vasp')
@@ -42,10 +47,6 @@ def visualize_atom(inAtom):
   ax = Axes3D(fig)
   ax.scatter(xList,yList,zList)
   pyplot.show()
-
-import random
-from ase import Atoms
-import numpy
 
 def create_sample_atom(inNumberOfAtoms,inAtomType):
   """Creates a mostly spherical atom with inNumberOfAtoms atoms
