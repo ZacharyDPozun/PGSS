@@ -15,7 +15,7 @@ from numpy import random
 from ase import io, optimize, md, units
 from ase.optimize import FIRE
 from ase.io.trajectory import PickleTrajectory
-
+from commonfunctions import *
 
 ######################################################
 # Now we are going to define a few key functions     #
@@ -53,21 +53,6 @@ def preventExplosions(atoms):
 	atoms.set_positions(positions)
 	return atoms
 	
-##
-## This function takes our input atoms object and turns  
-## it into a bimetallic alloy based on an input fraction 
-## 
-def makeBimetallic(atoms,element1,element2,fractionElement1): 
-	numberAtoms = len(atoms)
-	numberElementOne = numpy.int(len(atoms) * fractionElement1) # use integers not floats! 
-	atomicNumberArray = numpy.ones(numberAtoms) * element2
-	for i in range(numberElementOne):
-		atomicNumberArray[i] = element1
-	atoms.set_atomic_numbers(atomicNumberArray)
-	atoms.get_potential_energy()
-	return atoms
-	
-
 	
 ########################################################
 # Now we can actually run our basin hopping            #
@@ -84,10 +69,9 @@ sinceLastFind = 0
 # Here is the main body of the code. We'll load our atoms #
 # object and attach a calculator (QSC). 
 ###########################################################
-atoms = ase.io.read('POSCAR')
+atoms = makeBimetallic('POSCAR',100,78,79,0.5)
 calc = QSC()
 atoms.set_calculator(calc)
-atoms = makeBimetallic(atoms,79,78,0.25)
 minimaList = PickleTrajectory('Pt75Au25.traj',mode='a')
 
 for i in range(NMoves):

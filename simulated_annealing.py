@@ -17,6 +17,7 @@ from ase import units, io
 from tsase import md 
 from ase.optimize import FIRE
 from ase.io.trajectory import PickleTrajectory
+from commonfunctions import *
 
 ######################################################
 # Now we are going to define a few key functions     #
@@ -32,19 +33,6 @@ def temperature(NSteps, TMax, CurrentStep):
 	return newTemp
 
 	
-##
-## This function takes our input atoms object and turns  
-## it into a bimetallic alloy based on an input fraction 
-## 
-def makeBimetallic(atoms,element1,element2,fractionElement1): 
-	numberAtoms = len(atoms)
-	numberElementOne = numpy.int(len(atoms) * fractionElement1) # use integers not floats! 
-	atomicNumberArray = numpy.ones(numberAtoms) * element2
-	for i in range(numberElementOne):
-		atomicNumberArray[i] = element1
-	atoms.set_atomic_numbers(atomicNumberArray)
-	return atoms
-
 ########################################################
 # Now we can actually run our simulated annealing      #
 # First we need to define our initial variables        #
@@ -62,10 +50,9 @@ totalMinimaFound = 0
 # object and attach a calculator (QSC). Then we'll create #
 # two nested loops to run NRuns anneals for NSteps each.  #
 ###########################################################
-atoms = ase.io.read('POSCAR')
+atoms = makeBimetallic('POSCAR',100,78,79,.50)
 calc = QSC()
 atoms.set_calculator(calc)
-atoms = makeBimetallic(atoms,79,78,0.25)
 minimaList = PickleTrajectory('Pt75Au25.traj',mode='a')
 
 for i in range(NRuns): 
