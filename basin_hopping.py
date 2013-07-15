@@ -174,44 +174,45 @@ sinceLastFind = 0
 # Here is the main body of the code. We'll load our atoms #
 # object and attach a calculator (QSC). 
 ###########################################################
-atoms = makeBimetallic('POSCAR',100,78,79,0.5)
-calc = QSC()
-atoms.set_calculator(calc)
-minimaList = PickleTrajectory('Pt75Au25.traj',mode='a')
 
-for i in range(NMoves):
-	numbertomove = numpy.random.randint(len(atoms))
-	atoms = moveAtoms(numbertomove,atoms)
-	atoms.center()
-	atoms = preventExplosions(atoms)
-	# do a last optimization of the structure
-	dyn = FIRE(atoms)
-	dyn.run()
-	newEnergy = atoms.get_potential_energy()
-	if (newEnergy < bestEnergy):
-		bestEnergy = newEnergy
-		line = str(totalMinimaFound) + "  " + str(atoms.get_potential_energy()) + "  " + str(i) +"\n"
-		print line
-		f = open('EnergyList.txt','a')
-		f.write(line)
-		f.close()
-		minimaList.write(atoms)
-		totalMinimaFound += 1
-		sinceLastFind = 0
-	elif (sinceLastFind < 200): # if we haven't found a new minimum in 200 tries, start over
-		atoms = ase.io.read('POSCAR')
-		calc = QSC()
-		atoms.set_calculator(calc)
-		atoms = makeBimetallic(atoms,79,78,0.25)
-		sinceLastFind = 0
+##atoms = makeBimetallic('POSCAR',100,78,79,0.5)
+##calc = QSC()
+##atoms.set_calculator(calc)
+##minimaList = PickleTrajectory('Pt75Au25.traj',mode='a')
+
+##for i in range(NMoves):
+##	numbertomove = numpy.random.randint(len(atoms))
+##	atoms = moveAtoms(numbertomove,atoms)
+##	atoms.center()
+##	atoms = preventExplosions(atoms)
+##	# do a last optimization of the structure
+##	dyn = FIRE(atoms)
+##	dyn.run()
+##	newEnergy = atoms.get_potential_energy()
+##	if (newEnergy < bestEnergy):
+##		bestEnergy = newEnergy
+##		line = str(totalMinimaFound) + "  " + str(atoms.get_potential_energy()) + "  " + str(i) +"\n"
+##		print line
+##		f = open('EnergyList.txt','a')
+##		f.write(line)
+##		f.close()
+##		minimaList.write(atoms)
+##		totalMinimaFound += 1
+##		sinceLastFind = 0
+##	elif (sinceLastFind < 200): # if we haven't found a new minimum in 200 tries, start over
+##		atoms = ase.io.read('POSCAR')
+##		calc = QSC()
+##		atoms.set_calculator(calc)
+##		atoms = makeBimetallic(atoms,79,78,0.25)
+##		sinceLastFind = 0
 		
 
 
 
-minimaList.close()		
-minimaList = PickleTrajectory('Pt75Au25.traj',mode='r')
+##minimaList.close()		
+##minimaList = PickleTrajectory('Pt75Au25.traj',mode='r')
 
-atomslist = [atom for atom in minimaList]
-ase.io.write('movie.xyz',atomslist,format='xyz') # write a movie file of our dynamics
+##atomslist = [atom for atom in minimaList]
+##ase.io.write('movie.xyz',atomslist,format='xyz') # write a movie file of our dynamics
 
-minimaList.close()
+##minimaList.close()
