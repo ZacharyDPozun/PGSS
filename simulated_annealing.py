@@ -13,11 +13,12 @@ from qsc import QSC
 import numpy
 from numpy import random
 from copy import deepcopy
-from ase import units, io
+from ase import units, io, Atoms
 from tsase import md 
 from ase.optimize import FIRE
 from ase.io.trajectory import PickleTrajectory
-from commonfunctions import *
+import math
+
 
 ######################################################
 # Now we are going to define a few key functions     #
