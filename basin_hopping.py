@@ -26,6 +26,12 @@ from commonfunctions import *
 ## to move and it moves that many atoms each in a direction
 ## chosen from a Gaussian distribution in X Y and Z
 ##
+
+def rattleAtoms(atoms):
+        seed = numpy.random.randint(100)
+        atoms.rattle(stdev=0.5,seed=seed)
+        return atoms
+
 def moveAtoms(numbertomove,atoms):
 	totalAtoms = len(atoms)
 	positions = atoms.get_positions()
