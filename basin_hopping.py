@@ -27,6 +27,94 @@ from commonfunctions import *
 ## chosen from a Gaussian distribution in X Y and Z
 ##
 
+def shell_move(inAtom,atomIndex):  
+  #  we're going to be changing the position of atomIndex inside inAtom
+  #  make sure that you remove any crazy outliers before you do this
+  #  or else it'll just make a bunch more outliers, which is a poor idea
+  #  make sure atomIndex comes from range(len(inAtom.get_positions())) so we don't get out of bounds
+  try:
+    inCOM = inAtom.get_center_of_mass()
+    inDistances = distanceCenter(inAtom)
+    
+    ninetyNinthRadius = stats.scoreatpercentile(inDistances,99)
+    ninetyFifthRadius = stats.scoreatpercentile(inDistances,95) 
+    outerFourRadius = ninetyNinthRadius - ninetyFifthRadius
+    
+    randomNewRadius = random.gauss( (ninetyNinthRadius+ninetyFifthRadius)/2 , (ninetyNinthRadius - ninetyFifthRadius)/2 )
+    xFromCenter = random.uniform(0,randomNewRadius)
+    randomNewRadius = ((randomNewRadius**2) - (xFromCenter**2))**0.5
+    yFromCenter = random.uniform(0,randomNewRadius)
+    zFromCenter = ((randomNewRadius**2) - (yFromCenter**2))**0.5
+    
+    newXPosition = inCOM[0] + random.choice([-1,1])*xFromCenter
+    newYPosition = inCOM[1] + random.choice([-1,1])*yFromCenter
+    newZPosition = inCOM[2] + random.choice([-1,1])*zFromCenter
+    
+    positionArray = inAtom.get_positions()
+    positionArray[atomIndex] = (newXPosition,newYPosition,newZPosition)
+    inAtom.set_positions(positionArray)
+    
+    return inAtom
+    
+  except IndexError:
+    print "The index of the atom you wanted to move is too high or too low."
+    print "Please check your function call of shell_move(a,b)"
+    print "-Jeff"
+    
+def jolt(inAtom,magnitude):
+  """Moves all the atoms in inAtom by a Gaussian distribution
+  with mean of 0 and StdDev of magnitude.
+  A small magnitude is a small kick,
+  a larger magnitude is a big kick."""
+  posList = inAtom.get_positions()
+  for x in range(len(posList)):
+    posList[x][0] = posList[x][0] + random.gauss(0,magnitude)
+    posList[x][1] = posList[x][1] + random.gauss(0,magnitude)
+    posList[x][2] = posList[x][2] + random.gauss(0,magnitude)
+  inAtom.set_positions(posList)
+  return inAtom
+  
+def HighEnergyMove(atoms):
+    for cntr in range (len(atoms)):
+        if (atoms[cntr].getNeighboringAtoms(.5) > 3):
+            decideSingleMove()
+        elif (atoms[cntr].getNeighboringAtoms(.5) <= 3):
+            shake(atoms)
+            
+def ball_move(inAtom,atomIndex):
+  """takes an atom defined by atomIndex inside of inAtom
+  and moves it somewhere within the core of the atom randomly.
+  Atoms will almost always end up inside the sphere which
+  contains 85% of the atoms, centered at the center of mass."""
+  #  we're going to be changing the position of atomIndex inside inAtom
+  #  we'll take atom of index atomIndex and throw it somewhere inside the core
+  #  make sure that you remove any crazy outliers before you do this
+  #  or else it'll just make a bunch more outliers, which is a poor idea
+  try:
+    #get all the distances from the center of mass
+    inCOM = inAtom.get_center_of_mass()
+    inDistances = distanceCenter(inAtom)
+    #figure out the distance from the core to the 85th percentile
+    #we'll consider "the core" to be the sphere which contains 85% of the atoms
+    eightyFifthRadius = stats.scoreatpercentile(inDistances,85)
+    #pick a new distance from center somewhere inside that 85th percentile limit
+    randomNewRadius = random.gauss(eightyFifthRadius/2, eightyFifthRadius/3 )
+    xFromCenter = random.uniform(0,randomNewRadius)
+    randomNewRadius = ((randomNewRadius**2) - (xFromCenter**2))**0.5
+    yFromCenter = random.uniform(0,randomNewRadius)
+    zFromCenter = ((randomNewRadius**2) - (yFromCenter**2))**0.5
+    newXPosition = inCOM[0] + random.choice([-1,1])*xFromCenter
+    newYPosition = inCOM[1] + random.choice([-1,1])*yFromCenter
+    newZPosition = inCOM[2] + random.choice([-1,1])*zFromCenter
+    positionArray = inAtom.get_positions()
+    positionArray[atomIndex] = (newXPosition,newYPosition,newZPosition)
+    inAtom.set_positions(positionArray)
+    return inAtom
+  except IndexError:
+    print "The index of the atom you wanted to move is too high or too low."
+    print "Please check your function call of ball_move(a,b)"
+    print "-Jeff"
+
 def rattleAtoms(atoms):
         seed = numpy.random.randint(100)
         atoms.rattle(stdev=0.5,seed=seed)
@@ -106,39 +194,7 @@ for i in range(NMoves):
 		atoms = makeBimetallic(atoms,79,78,0.25)
 		sinceLastFind = 0
 		
-def shell_move(inAtom,atomIndex):  
-  #  we're going to be changing the position of atomIndex inside inAtom
-  #  make sure that you remove any crazy outliers before you do this
-  #  or else it'll just make a bunch more outliers, which is a poor idea
-  #  make sure atomIndex comes from range(len(inAtom.get_positions())) so we don't get out of bounds
-  try:
-    inCOM = inAtom.get_center_of_mass()
-    inDistances = distanceCenter(inAtom)
-    
-    ninetyNinthRadius = stats.scoreatpercentile(inDistances,99)
-    ninetyFifthRadius = stats.scoreatpercentile(inDistances,95) 
-    outerFourRadius = ninetyNinthRadius - ninetyFifthRadius
-    
-    randomNewRadius = random.gauss( (ninetyNinthRadius+ninetyFifthRadius)/2 , (ninetyNinthRadius - ninetyFifthRadius)/2 )
-    xFromCenter = random.uniform(0,randomNewRadius)
-    randomNewRadius = ((randomNewRadius**2) - (xFromCenter**2))**0.5
-    yFromCenter = random.uniform(0,randomNewRadius)
-    zFromCenter = ((randomNewRadius**2) - (yFromCenter**2))**0.5
-    
-    newXPosition = inCOM[0] + random.choice([-1,1])*xFromCenter
-    newYPosition = inCOM[1] + random.choice([-1,1])*yFromCenter
-    newZPosition = inCOM[2] + random.choice([-1,1])*zFromCenter
-    
-    positionArray = inAtom.get_positions()
-    positionArray[atomIndex] = (newXPosition,newYPosition,newZPosition)
-    inAtom.set_positions(positionArray)
-    
-    return inAtom
-    
-  except IndexError:
-    print "The index of the atom you wanted to move is too high or too low."
-    print "Please check your function call of shell_move(a,b)"
-    print "-Jeff"
+
 
 
 minimaList.close()		
