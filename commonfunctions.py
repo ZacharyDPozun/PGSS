@@ -8,6 +8,8 @@ from ase import io, optimize, md, units, Atoms
 from ase.optimize import FIRE
 from ase.io.trajectory import PickleTrajectory
 from ase.md import VelocityVerlet
+from basin_hopping import *
+from simulated_annealing import *
 
 def makeBimetallic(filename,numberAtoms,element1,element2,fractionElement1):
         atoms = ase.io.read(filename,format='vasp')
