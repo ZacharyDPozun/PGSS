@@ -84,7 +84,8 @@ totalMinimaFound = 0
 # object and attach a calculator (QSC). Then we'll create #
 # two nested loops to run NRuns anneals for NSteps each.  #
 ###########################################################
-atoms = makeBimetallic('POSCAR',100,78,79,.50)
+
+#atoms = makeBimetallic('POSCAR',100,78,79,.50)
 calc = QSC()
 atoms.set_calculator(calc)
 minimaList = PickleTrajectory('Pt75Au25.traj',mode='a')
