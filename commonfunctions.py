@@ -15,17 +15,49 @@ def makeBimetallic(filename,numberAtoms,element1,element2,fractionElement1):
         atoms.set_atomic_numbers(atomicNumberArray)
 	atoms.center()
         return atoms
+        
+def distanceCenter(atoms):
+	distanceArray = numpy.zeros(len(atoms))
+	cx = atoms.get_center_of_mass()[0]
+	cy = atoms.get_center_of_mass()[0]
+	cz = atoms.get_center_of_mass()[0]
+	for i in range(len(atoms)):
+                px = atoms.get_positions()[i,0]
+		py = atoms.get_positions()[i,1]
+		pz = atoms.get_positions()[i,2]
+		distance = ((px-cx)**2+(py-cy)**2+(pz-cz)**2)**0.5
+		distanceArray[i] = distance
+	return distanceArray
 
-def nearestNeighbor(molecule):
-    MinDistanceToX = []
-    positionList = molecule.get_positions()
-    for i in range(0,len(positionList)):
-        distanceList = []
-        for j in range (0,len(positionList)):
-            distance = numpy.linalg.norm(positionList[i]-positionList[j])
-            pair = (distance,i,j)
-            distanceList.append(pair)
-        distanceList.sort()
-        MinDistanceToX.append(distanceList[1])
+def visualize_atom(inAtom):
+  positionList = inAtom.get_positions()
+  xList, yList, zList = [],[],[]
+  for x in range(len(positionList)):
+    xList.append(positionList[x][0])
+    yList.append(positionList[x][1])
+    zList.append(positionList[x][2])
+  #
+  #
+  fig = pylab.figure()
+  ax = Axes3D(fig)
+  ax.scatter(xList,yList,zList)
+  pyplot.show()
 
-    return MinDistanceToX
+import random
+from ase import Atoms
+import numpy
+
+def create_sample_atom(inNumberOfAtoms,inAtomType):
+  """Creates a mostly spherical atom with inNumberOfAtoms atoms
+  and all of element inAtomType.  inAtomType MUST BE A STRING.
+  For example, 'Pt79' for Platinum and 79 atoms."""
+  positionList = []
+  halfOfRadius = 3
+  standardDeviation = 1.65
+  for x in range(0,inNumberOfAtoms):
+    atomX = random.gauss(halfOfRadius,standardDeviation)*random.choice([-1,1])
+    atomY = random.gauss(halfOfRadius,standardDeviation)*random.choice([-1,1])
+    atomZ = random.gauss(halfOfRadius,standardDeviation)*random.choice([-1,1])
+    positionList.append((atomX,atomY,atomZ))
+  sample_atom = Atoms(inAtomType,numpy.asarray(positionList))
+  return sample_atom
