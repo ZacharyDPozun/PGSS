@@ -14,7 +14,6 @@ import ase
 import tsase
 from qsc import QSC
 from numpy import *
-from numpy import random as nprandom
 from copy import deepcopy
 from ase import units, io, Atoms
 from tsase import md 
