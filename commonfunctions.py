@@ -34,7 +34,7 @@ def nearlySphericalAtom(definingString,inRadius,number):
     xDistance = random.uniform(0,inRadius)*plusOrMinus()
     remainingX = ((inRadius**2) - (xDistance**2))**0.5
     yDistance = random.uniform(0,remainingX)*plusOrMinus()
-    zDistance = (((remainingX**2) - (yDistance**2))**0.5)*plusOrMinus + random.normal(0,0.1)
+    zDistance = (((remainingX**2) - (yDistance**2))**0.5)*plusOrMinus() + random.normal(0,0.1)
     coordinates = (xDistance,yDistance,zDistance)
     positionList.append(coordinates)
   newAtom = Atoms(definingString,positionList)
