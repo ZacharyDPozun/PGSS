@@ -1,4 +1,3 @@
-
 from basin_hopping import *
 from simulated_annealing import *
 import ase
@@ -19,9 +18,9 @@ def create_sample_atom(inNumberOfAtoms,inAtomType):
   halfOfRadius = 3
   standardDeviation = 1.65
   for x in range(0,inNumberOfAtoms):
-    atomX = random.gauss(halfOfRadius,standardDeviation)*numpy.random.choice([-1,1])
-    atomY = random.gauss(halfOfRadius,standardDeviation)*numpy.random.choice([-1,1])
-    atomZ = random.gauss(halfOfRadius,standardDeviation)*numpy.random.choice([-1,1])
+    atomX = random.normal(halfOfRadius,standardDeviation)*numpy.random.choice([-1,1])
+    atomY = random.normal(halfOfRadius,standardDeviation)*numpy.random.choice([-1,1])
+    atomZ = random.normal(halfOfRadius,standardDeviation)*numpy.random.choice([-1,1])
     positionList.append((atomX,atomY,atomZ))
   sample_atom = Atoms(inAtomType,numpy.asarray(positionList))
   return sample_atom
