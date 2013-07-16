@@ -19,6 +19,7 @@ def create_sample_atom(inNumberOfAtoms,inAtomType):
   halfOfRadius = 3
   standardDeviation = 1.65
   for x in range(0,inNumberOfAtoms):
+    print nprandom.choice([-1,1])
     atomX = nprandom.normal(halfOfRadius,standardDeviation)*nprandom.choice([-1,1])
     atomY = nprandom.normal(halfOfRadius,standardDeviation)*nprandom.choice([-1,1])
     atomZ = nprandom.normal(halfOfRadius,standardDeviation)*nprandom.choice([-1,1])
