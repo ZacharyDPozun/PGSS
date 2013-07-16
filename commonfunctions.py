@@ -4,6 +4,7 @@ import ase
 import tsase
 from qsc import QSC
 from numpy import *
+from numpy import random as nprandom
 from ase import io, optimize, md, units, Atoms
 from ase.optimize import FIRE
 from ase.io.trajectory import PickleTrajectory
@@ -18,9 +19,9 @@ def create_sample_atom(inNumberOfAtoms,inAtomType):
   halfOfRadius = 3
   standardDeviation = 1.65
   for x in range(0,inNumberOfAtoms):
-    atomX = random.normal(halfOfRadius,standardDeviation)*random.choice([-1,1])
-    atomY = random.normal(halfOfRadius,standardDeviation)*random.choice([-1,1])
-    atomZ = random.normal(halfOfRadius,standardDeviation)*random.choice([-1,1])
+    atomX = nprandom.normal(halfOfRadius,standardDeviation)*nprandom.choice([-1,1])
+    atomY = nprandom.normal(halfOfRadius,standardDeviation)*nprandom.choice([-1,1])
+    atomZ = nprandom.normal(halfOfRadius,standardDeviation)*nprandom.choice([-1,1])
     positionList.append((atomX,atomY,atomZ))
   sample_atom = Atoms(inAtomType,numpy.asarray(positionList))
   return sample_atom
@@ -31,10 +32,10 @@ def nearlySphericalAtom(definingString,inRadius,number):
   number should be the number of atoms that will be in the molecule."""
   positionList = []
   for x in range(number):
-    xDistance = random.uniform(0,inRadius)*random.choice([-1,1])
+    xDistance = nprandom.uniform(0,inRadius)*nprandom.choice([-1,1])
     remainingX = ((inRadius**2) - (xDistance**2))**0.5
-    yDistance = random.uniform(0,remainingX)*random.choice([-1,1])
-    zDistance = (((remainingX**2) - (yDistance**2))**0.5)*random.choice([-1,1]) + random.normal(0,0.1)
+    yDistance = nprandom.uniform(0,remainingX)*nprandom.choice([-1,1])
+    zDistance = (((remainingX**2) - (yDistance**2))**0.5)*nprandom.choice([-1,1]) + nprandom.normal(0,0.1)
     coordinates = (xDistance,yDistance,zDistance)
     positionList.append(coordinates)
   newAtom = Atoms(definingString,positionList)
