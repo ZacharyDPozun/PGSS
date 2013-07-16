@@ -1,10 +1,9 @@
-#from basin_hopping import *
-#from simulated_annealing import *
+from basin_hopping import *
+from simulated_annealing import *
 import ase
 import tsase
 from qsc import QSC
 from numpy import *
-from numpy import random as nprandom
 from ase import io, optimize, md, units, Atoms
 from ase.optimize import FIRE
 from ase.io.trajectory import PickleTrajectory
@@ -19,10 +18,9 @@ def create_sample_atom(inNumberOfAtoms,inAtomType):
   halfOfRadius = 3
   standardDeviation = 1.65
   for x in range(0,inNumberOfAtoms):
-    print nprandom.choice([-1,1])
-    atomX = nprandom.normal(halfOfRadius,standardDeviation)*nprandom.choice([-1,1])
-    atomY = nprandom.normal(halfOfRadius,standardDeviation)*nprandom.choice([-1,1])
-    atomZ = nprandom.normal(halfOfRadius,standardDeviation)*nprandom.choice([-1,1])
+    atomX = random.normal(halfOfRadius,standardDeviation)*plusOrMinus()
+    atomY = random.normal(halfOfRadius,standardDeviation)*plusOrMinus()
+    atomZ = random.normal(halfOfRadius,standardDeviation)*plusOrMinus()
     positionList.append((atomX,atomY,atomZ))
   sample_atom = Atoms(inAtomType,numpy.asarray(positionList))
   return sample_atom
@@ -33,10 +31,10 @@ def nearlySphericalAtom(definingString,inRadius,number):
   number should be the number of atoms that will be in the molecule."""
   positionList = []
   for x in range(number):
-    xDistance = nprandom.uniform(0,inRadius)*nprandom.choice([-1,1])
+    xDistance = random.uniform(0,inRadius)*plusOrMinus()
     remainingX = ((inRadius**2) - (xDistance**2))**0.5
-    yDistance = nprandom.uniform(0,remainingX)*nprandom.choice([-1,1])
-    zDistance = (((remainingX**2) - (yDistance**2))**0.5)*nprandom.choice([-1,1]) + nprandom.normal(0,0.1)
+    yDistance = random.uniform(0,remainingX)*plusOrMinus()
+    zDistance = (((remainingX**2) - (yDistance**2))**0.5)*plusOrMinus + random.normal(0,0.1)
     coordinates = (xDistance,yDistance,zDistance)
     positionList.append(coordinates)
   newAtom = Atoms(definingString,positionList)
@@ -81,4 +79,9 @@ def visualize_atom(inAtom):
   ax.scatter(xList,yList,zList)
   pyplot.show()
 
-
+def plusOrMinus():
+    a = nprandom.uniform(0,1)
+    if (a>0.5):
+        return 1
+    else:
+        return -1
