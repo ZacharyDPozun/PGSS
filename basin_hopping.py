@@ -20,7 +20,6 @@ from ase.optimize import FIRE
 from ase.io.trajectory import PickleTrajectory
 from ase.md import VelocityVerlet
 from scipy import stats
-import random
 import operator
 from matplotlib import pyplot
 import pylab
