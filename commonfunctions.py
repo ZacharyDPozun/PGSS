@@ -1,14 +1,15 @@
+
+from basin_hopping import *
+from simulated_annealing import *
 import ase
 import tsase
 from qsc import QSC
-import numpy
-from numpy import random
+from numpy import *
 from ase import io, optimize, md, units, Atoms
 from ase.optimize import FIRE
 from ase.io.trajectory import PickleTrajectory
 from ase.md import VelocityVerlet
-from basin_hopping import *
-from simulated_annealing import *
+
 
 def create_sample_atom(inNumberOfAtoms,inAtomType):
   """Creates a mostly spherical atom with inNumberOfAtoms atoms
