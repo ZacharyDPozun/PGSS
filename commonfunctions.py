@@ -80,7 +80,7 @@ def visualize_atom(inAtom):
   pyplot.show()
 
 def plusOrMinus():
-    a = nprandom.uniform(0,1)
+    a = random.uniform(0,1)
     if (a>0.5):
         return 1
     else:
