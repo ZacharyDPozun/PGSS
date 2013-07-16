@@ -13,7 +13,7 @@ from commonfunctions import *
 import ase
 import tsase
 from qsc import QSC
-import numpy import *
+from numpy import *
 from copy import deepcopy
 from ase import units, io, Atoms
 from tsase import md 
