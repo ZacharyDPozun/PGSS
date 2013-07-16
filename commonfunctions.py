@@ -2,8 +2,8 @@ import ase
 import tsase
 from qsc import QSC
 import numpy
-import random
 from numpy import random
+import random
 from ase import io, optimize, md, units, Atoms
 from ase.optimize import FIRE
 from ase.io.trajectory import PickleTrajectory
