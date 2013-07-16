@@ -14,7 +14,6 @@ import ase
 import tsase
 from qsc import QSC
 from numpy import *
-from numpy import random as nprandom
 from ase import io, optimize, md, units, Atoms
 from ase.optimize import FIRE
 from ase.io.trajectory import PickleTrajectory
@@ -50,15 +49,15 @@ def shell_move(inAtom,atomIndex):
     ninetyFifthRadius = stats.scoreatpercentile(inDistances,95) 
     outerFourRadius = ninetyNinthRadius - ninetyFifthRadius
     
-    randomNewRadius = random.gauss( (ninetyNinthRadius+ninetyFifthRadius)/2 , (ninetyNinthRadius - ninetyFifthRadius)/2 )
+    randomNewRadius = random.normal( (ninetyNinthRadius+ninetyFifthRadius)/2 , (ninetyNinthRadius - ninetyFifthRadius)/2 )
     xFromCenter = random.uniform(0,randomNewRadius)
     randomNewRadius = ((randomNewRadius**2) - (xFromCenter**2))**0.5
     yFromCenter = random.uniform(0,randomNewRadius)
     zFromCenter = ((randomNewRadius**2) - (yFromCenter**2))**0.5
     
-    newXPosition = inCOM[0] + random.choice([-1,1])*xFromCenter
-    newYPosition = inCOM[1] + random.choice([-1,1])*yFromCenter
-    newZPosition = inCOM[2] + random.choice([-1,1])*zFromCenter
+    newXPosition = inCOM[0] + plusOrMinus()*xFromCenter
+    newYPosition = inCOM[1] + plusOrMinus()*yFromCenter
+    newZPosition = inCOM[2] + plusOrMinus()*zFromCenter
     
     positionArray = inAtom.get_positions()
     positionArray[atomIndex] = (newXPosition,newYPosition,newZPosition)
@@ -78,9 +77,9 @@ def jolt(inAtom,magnitude):
   a larger magnitude is a big kick."""
   posList = inAtom.get_positions()
   for x in range(len(posList)):
-    posList[x][0] = posList[x][0] + random.gauss(0,magnitude)
-    posList[x][1] = posList[x][1] + random.gauss(0,magnitude)
-    posList[x][2] = posList[x][2] + random.gauss(0,magnitude)
+    posList[x][0] = posList[x][0] + random.normal(0,magnitude)
+    posList[x][1] = posList[x][1] + random.normal(0,magnitude)
+    posList[x][2] = posList[x][2] + random.normal(0,magnitude)
   inAtom.set_positions(posList)
   return inAtom
   
@@ -108,14 +107,14 @@ def ball_move(inAtom,atomIndex):
     #we'll consider "the core" to be the sphere which contains 85% of the atoms
     eightyFifthRadius = stats.scoreatpercentile(inDistances,85)
     #pick a new distance from center somewhere inside that 85th percentile limit
-    randomNewRadius = random.gauss(eightyFifthRadius/2, eightyFifthRadius/3 )
+    randomNewRadius = random.normal(eightyFifthRadius/2, eightyFifthRadius/3 )
     xFromCenter = random.uniform(0,randomNewRadius)
     randomNewRadius = ((randomNewRadius**2) - (xFromCenter**2))**0.5
     yFromCenter = random.uniform(0,randomNewRadius)
     zFromCenter = ((randomNewRadius**2) - (yFromCenter**2))**0.5
-    newXPosition = inCOM[0] + random.choice([-1,1])*xFromCenter
-    newYPosition = inCOM[1] + random.choice([-1,1])*yFromCenter
-    newZPosition = inCOM[2] + random.choice([-1,1])*zFromCenter
+    newXPosition = inCOM[0] + plusOrMinus()*xFromCenter
+    newYPosition = inCOM[1] + plusOrMinus()*yFromCenter
+    newZPosition = inCOM[2] + plusOrMinus()*zFromCenter
     positionArray = inAtom.get_positions()
     positionArray[atomIndex] = (newXPosition,newYPosition,newZPosition)
     inAtom.set_positions(positionArray)
@@ -126,7 +125,7 @@ def ball_move(inAtom,atomIndex):
     print "-Jeff"
 
 def rattleAtoms(atoms):
-        seed = numpy.random.randint(100)
+        seed = random.randint(100)
         atoms.rattle(stdev=0.5,seed=seed)
         return atoms
 
@@ -134,10 +133,10 @@ def moveAtoms(numbertomove,atoms):
 	totalAtoms = len(atoms)
 	positions = atoms.get_positions()
 	for i in range(numbertomove):
-		atomtomove = numpy.random.randint(totalAtoms) # choose a random atom number
-		displacementX = numpy.random.normal(scale = 1.0)
-		displacementY = numpy.random.normal(scale = 1.0)
-		displacementZ = numpy.random.normal(scale = 1.0)
+		atomtomove = random.randint(totalAtoms) # choose a random atom number
+		displacementX = random.normal(scale = 1.0)
+		displacementY = random.normal(scale = 1.0)
+		displacementZ = random.normal(scale = 1.0)
 		positions[atomtomove,0] += displacementX
 		positions[atomtomove,1] += displacementY
 		positions[atomtomove,2] += displacementZ
@@ -180,7 +179,7 @@ sinceLastFind = 0
 ##minimaList = PickleTrajectory('Pt75Au25.traj',mode='a')
 
 ##for i in range(NMoves):
-##	numbertomove = numpy.random.randint(len(atoms))
+##	numbertomove = random.randint(len(atoms))
 ##	atoms = moveAtoms(numbertomove,atoms)
 ##	atoms.center()
 ##	atoms = preventExplosions(atoms)
