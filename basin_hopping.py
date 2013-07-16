@@ -14,6 +14,7 @@ import ase
 import tsase
 from qsc import QSC
 from numpy import *
+from numpy import random as nprandom
 from ase import io, optimize, md, units, Atoms
 from ase.optimize import FIRE
 from ase.io.trajectory import PickleTrajectory
