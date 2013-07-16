@@ -86,39 +86,39 @@ totalMinimaFound = 0
 ###########################################################
 
 #atoms = makeBimetallic('POSCAR',100,78,79,.50)
-calc = QSC()
-atoms.set_calculator(calc)
-minimaList = PickleTrajectory('Pt75Au25.traj',mode='a')
+#calc = QSC()
+#atoms.set_calculator(calc)
+#minimaList = PickleTrajectory('Pt75Au25.traj',mode='a')
 
 #change the arguments in the line below to vary the temperature schedule
-temperatures = generateTemperatures(InitialTemp,NSteps,0.0,1.0,0.85, 0.30)
+#temperatures = generateTemperatures(InitialTemp,NSteps,0.0,1.0,0.85, 0.30)
 
-for i in range(NRuns): 
-	# do our annealing according to the schedule set above
-	atoms.center() # recenter the atoms every time, just in case
-	for n in range(NSteps - 1):
-		currentTemp = temperature(NSteps,InitialTemp, n)
-		dyn = tsase.md.nvtandersen(atoms, 5 * units.fs, units.kB * currentTemp)
-		dyn.run(1)
-	# do a last optimization of the structure
-	dyn = FIRE(atoms)
-	dyn.run()
-	newEnergy = atoms.get_potential_energy()
-	if (newEnergy < bestEnergy):
-		bestEnergy = newEnergy
-		line = str(totalMinimaFound) + "  " + str(atoms.get_potential_energy()) + "  " + str(i) +"\n"
-		print line
-		f = open('EnergyList.txt','a')
-		f.write(line)
-		f.close()
-		minimaList.write(atoms)
-		totalMinimaFound += 1
-		
-minimaList.close()
-minimaList = PickleTrajectory('Pt75Au25.traj',mode='r')
-
-atomslist = [atom for atom in minimaList]
-ase.io.write('movie.xyz',atomslist,format='xyz') # write a movie file of our dynamics
-
-minimaList.close()
+##for i in range(NRuns):
+##	# do our annealing according to the schedule set above
+##	atoms.center() # recenter the atoms every time, just in case
+##	for n in range(NSteps - 1):
+##		currentTemp = temperature(NSteps,InitialTemp, n)
+##		dyn = tsase.md.nvtandersen(atoms, 5 * units.fs, units.kB * currentTemp)
+##		dyn.run(1)
+##	# do a last optimization of the structure
+##	dyn = FIRE(atoms)
+##	dyn.run()
+##	newEnergy = atoms.get_potential_energy()
+##	if (newEnergy < bestEnergy):
+##		bestEnergy = newEnergy
+##		line = str(totalMinimaFound) + "  " + str(atoms.get_potential_energy()) + "  " + str(i) +"\n"
+##		print line
+##		f = open('EnergyList.txt','a')
+##		f.write(line)
+##		f.close()
+##		minimaList.write(atoms)
+##		totalMinimaFound += 1
+##
+##minimaList.close()
+##minimaList = PickleTrajectory('Pt75Au25.traj',mode='r')
+##
+##atomslist = [atom for atom in minimaList]
+##ase.io.write('movie.xyz',atomslist,format='xyz') # write a movie file of our dynamics
+##
+##minimaList.close()
 
