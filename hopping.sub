@@ -1,0 +1,11 @@
+#!/bin/bash
+#
+#$ -cwd
+#$ -j y
+#$ -V
+#$ -m es
+#$ -o ll_out
+#$ -S /bin/bash
+#$ -N basin_hopping
+
+./basin_hopping.py
