@@ -192,7 +192,7 @@ def preventExplosions(atoms):
 ########################################################
 
 # total moves made
-NMoves = 10000
+
 bestEnergy = 0.
 totalMinimaFound = 0
 sinceLastFind = 0
@@ -202,7 +202,7 @@ sinceLastFind = 0
 # object and attach a calculator (QSC).
 ###########################################################
 
-##atoms = makeBimetallic('POSCAR',100,78,79,0.5)
+##atoms = makeBimetallic('POSCAR',NAtoms,Atom1,Atom2,CompAtom1)
 ##calc = QSC()
 ##atoms.set_calculator(calc)
 ##minimaList = PickleTrajectory('Pt75Au25.traj',mode='a')
