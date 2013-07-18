@@ -159,6 +159,19 @@ def moveAtoms(numbertomove,atoms):
         atoms.set_positions(positions)
         print atoms.get_potential_energy()
         return atoms
+        
+def HighEnergyMove(molecule):
+  posList = molecule.get_positions()
+  for atom1 in posList:
+    lessThanThreeA = 0
+    for atom2 in posList:
+      distanceBetween = numpy.linalg.norm(atom1-atom2)
+      if distanceBetween < 3.0:
+        lessThanThreeA += 1
+    if lessThanThreeA < 3:
+      pass
+    else:
+      ball_move(molecule,posList.index(atom1))
 
 def preventExplosions(atoms):
         positions = atoms.get_positions()
