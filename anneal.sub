@@ -1,0 +1,11 @@
+#!/bin/bash
+#
+#$ -cwd
+#$ -j y
+#$ -V
+#$ -m es
+#$ -o ll_out
+#$ -S /bin/bash
+#$ -N simulated_annealing
+
+./simulated_annealing.py
