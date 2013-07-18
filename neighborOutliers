@@ -1,0 +1,86 @@
+#!/usr/bin/env python
+
+import ase
+import tsase
+from qsc import QSC
+import numpy
+from numpy import random
+from ase import io, optimize, md, units
+from ase.optimize import FIRE
+from ase.io.trajectory import PickleTrajectory
+from ase.md import VelocityVerlet
+from scipy import stats
+import operator
+
+
+def HighEnergyMove(atoms):
+    for cntr in range (len(atoms)):
+        if (atoms[cntr].getNeighboringAtoms(.5) > 3):
+            decideSingleMove()
+        elif (atoms[cntr].getNeighboringAtoms(.5) <= 3):
+            shake(atoms)
+
+def nearestNeighbor(molecule):
+    MinDistanceToX = []
+    positionList = molecule.get_positions()
+    for i in range(0,len(positionList)):
+        distanceList = []
+        for j in range (0,len(positionList)):
+            distance = numpy.linalg.norm(positionList[i]-positionList[j])
+            pair = (distance,i,j)
+            distanceList.append(pair)
+        distanceList.sort()
+        MinDistanceToX.append(distanceList[1])
+
+    return MinDistanceToX
+
+def findOutliers(distances):
+    firstQuarterPercentile = distances[len(distances)/4]
+    thirdQuarterPercentile = distances[len(distances)*3/4]
+    iqr = thirdQuarterPercentile - firstQuarterPercentile
+    upperBound = thirdQuarterPercentile + 1.5*iqr
+    lowerBound = firstQuarterPercentile + 1.5*iqr
+    for cntr in range(len(distances)):
+        if (distances[cntr] < lowerBound || distances[cntr] > upperBound)
+
+
+
+def atomDistances(atoms):
+    atomPositions = atoms.get_positions()
+    nearestNeighbors = []
+    for i in range(0, len(atomPositions)-1):
+        closestDistance = 10000000
+        if (i!=0):
+            for j in range(i+1, len(atomPositions)):
+                iX = atomPositions[i][0]
+                iY = atomPositions[i][1]
+                iZ = atomPositions[i][2]
+                jX = atomPositions[j][0]
+                jY = atomPositions[j][1]
+                jZ = atomPositions[j][2]
+                distance = ((jX - iX)**2 + (jY - iY)**2 + (jZ - iZ)**2)**0.5
+            if (distance < closestDistance):
+                closestDistance = distance
+        if (i != len(atomPositions)):
+            for j in range(i+1, len(atoms)):
+                iX = atomPositions[i][0]
+                iY = atomPositions[i][1]
+                iZ = atomPositions[i][2]
+                jX = atomPositions[j][0]
+                jY = atomPositions[j][1]
+                jZ = atomPositions[j][2]
+                distance = ((jX - iX)**2 + (jY - iY)**2 + (jZ - iZ)**2)**0.5
+            if (distance < closestDistance):
+                closestDistance = distance
+        nearestNeighbors.append(closestDistance)
+        return nearestNeighbors
+
+
+
+
+
+
+
+
+
+
