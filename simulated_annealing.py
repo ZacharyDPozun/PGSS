@@ -7,20 +7,20 @@
 # The next thing we do is import all of the         #
 # important python libraries that we will need      #
 #####################################################
-
-from basin_hopping import *
-from commonfunctions import *
 import ase
 import tsase
+import math
 from qsc import QSC
-from numpy import *
+import numpy
+from numpy import random
 from copy import deepcopy
-from ase import units, io, Atoms
+from ase import units, io
 from tsase import md 
 from ase.optimize import FIRE
 from ase.io.trajectory import PickleTrajectory
-import math
-from InputVariables import *
+
+
+
 
 ######################################################
 # Now we are going to define a few key functions     #
@@ -28,7 +28,6 @@ from InputVariables import *
 
 #T = max temp, N = number of steps, xfactor1 = as a decimal; the fraction of the number of steps until the first point,
 #yfactor 1 = as a decimal, xfactor2 = as a decimal;the fraction of the number of steps until the second point, yfactor2 = as a decimal
-#the "factor" arguments represent ratios, so they should be less than 1. The factor arguments define the endpoints of the "pieces" of the piecewise function
 def generateTemperatures(T, N, xfactor1, yfactor1, xfactor2, yfactor2):
     temperature = [0]*N
     k = (math.log(yfactor1*T) - math.log(yfactor2*T))/(N*(xfactor1 - xfactor2))
@@ -65,59 +64,68 @@ def makeBimetallic(atoms,element1,element2,fractionElement1):
 	atoms.set_atomic_numbers(atomicNumberArray)
 	return atoms
 
-	
 ########################################################
 # Now we can actually run our simulated annealing      #
 # First we need to define our initial variables        #
 ########################################################
 
-NSteps = 30000 # Total steps PER anneal
-InitialTemp = 1000 # Starting temperature
-NRuns = 500 # Total anneals to do
-bestEnergy = 0.
-totalMinimaFound = 0
+def simulated_annealing(xfactor1,yfactor1,xfactor2,yfactor2):
+    NSteps = 30000 # Total steps PER anneal
+    InitialTemp = 1000 # Starting temperature
+    NRuns = 250 # Total anneals to do
+    bestEnergy = 0.
+    totalMinimaFound = 0
 
 
-###########################################################
-# Here is the main body of the code. We'll load our atoms #
-# object and attach a calculator (QSC). Then we'll create #
-# two nested loops to run NRuns anneals for NSteps each.  #
-###########################################################
+    ###########################################################
+    # Here is the main body of the code. We'll load our atoms #
+    # object and attach a calculator (QSC). Then we'll create #
+    # two nested loops to run NRuns anneals for NSteps each.  #
+    ###########################################################
+    atoms = ase.io.read('POSCAR')
+    calc = QSC()
+    atoms.set_calculator(calc)
+    atoms = makeBimetallic(atoms,79,78,0.25)
+    minimaList = PickleTrajectory('Pt75Au25.traj',mode='a')
 
-#atoms = makeBimetallic('POSCAR',100,78,79,.50)
-#calc = QSC()
-#atoms.set_calculator(calc)
-#minimaList = PickleTrajectory('Pt75Au25.traj',mode='a')
 
-#change the arguments in the line below to vary the temperature schedule
-#temperatures = generateTemperatures(InitialTemp,NSteps,0.0,1.0,0.85, 0.30)
+    temperatures = generateTemperatures(InitialTemp,NSteps,xfactor1,yfactor1,xfactor2, yfactor2)
 
-##for i in range(NRuns):
-##	# do our annealing according to the schedule set above
-##	atoms.center() # recenter the atoms every time, just in case
-##	for n in range(NSteps - 1):
-##		currentTemp = temperature(NSteps,InitialTemp, n)
-##		dyn = tsase.md.nvtandersen(atoms, 5 * units.fs, units.kB * currentTemp)
-##		dyn.run(1)
-##	# do a last optimization of the structure
-##	dyn = FIRE(atoms)
-##	dyn.run()
-##	newEnergy = atoms.get_potential_energy()
-##	if (newEnergy < bestEnergy):
-##		bestEnergy = newEnergy
-##		line = str(totalMinimaFound) + "  " + str(atoms.get_potential_energy()) + "  " + str(i) +"\n"
-##		print line
-##		f = open('EnergyList.txt','a')
-##		f.write(line)
-##		f.close()
-##		minimaList.write(atoms)
-##		totalMinimaFound += 1
-##
-##minimaList.close()
-##minimaList = PickleTrajectory('Pt75Au25.traj',mode='r')
-##
-##atomslist = [atom for atom in minimaList]
-##ase.io.write('movie.xyz',atomslist,format='xyz') # write a movie file of our dynamics
-##
-##minimaList.close()
+    for i in range(NRuns): 
+            # do our annealing according to the schedule set above
+            atoms.center() # recenter the atoms every time, just in case
+            for n in range(NSteps - 1):
+                    currentTemp = temperature(n, temperatures)
+                    dyn = tsase.md.nvtandersen(atoms, 5 * units.fs, units.kB * currentTemp)
+                    dyn.run(1)
+            # do a last optimization of the structure
+            dyn = FIRE(atoms)
+            dyn.run()
+            newEnergy = atoms.get_potential_energy()
+            if (newEnergy < bestEnergy):
+                    bestEnergy = newEnergy
+                    line = str(totalMinimaFound) + "  " + str(atoms.get_potential_energy()) + "  " + str(i) +"\n"
+                    print line
+                    f = open('EnergyList.txt','a')
+                    f.write(line)
+                    f.close()
+                    minimaList.write(atoms)
+                    totalMinimaFound += 1
+                    
+    atomslist = [atom for atom in minimaList]
+    ase.io.write('movie.xyz',atomslist,format='xyz') # write a movie file of our dynamics
+
+    return atomslist, ase.io.write, minimaList.close()
+
+for i in range(50,104,5):
+    xfactor2 = i/100.0
+    for j in range(5,54,5):
+        yfactor2 = j/100.0
+        for k in range(5,54,5):
+            xfactor1 = k/100.0
+            for l in range(50,104,5):
+                yfactor1 = l/100.0
+                print xfactor1, yfactor1, xfactor2, yfactor2
+                print simulated_annealing(xfactor1, yfactor1, xfactor2, yfactor2)
+
 
