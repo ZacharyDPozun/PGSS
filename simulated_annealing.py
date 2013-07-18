@@ -20,7 +20,7 @@ from tsase import md
 from ase.optimize import FIRE
 from ase.io.trajectory import PickleTrajectory
 import math
-from InputVariables import *
+
 
 ######################################################
 # Now we are going to define a few key functions     #
