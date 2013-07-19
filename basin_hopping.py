@@ -59,7 +59,7 @@ def mainBasinLoop(nAtoms,type1,type2,percent1,hugeMoleculeRepositoryFile):
     #RUN THE ACTUAL OPTIMIZER
     #dyn.FIRE() ???
     #bigKickResults[x] = resultOfOptimization(bigKickResults[x])
-    #I will assume that when you're done this, you should get back an atom
+    #I'll assume that when you're done this, you should get back an atom
     # which has been optimized by the process.
     round1PE.append(molecule.get_potential_energy())
 
@@ -79,9 +79,10 @@ def smallKicks(moleculeList, inTreeLevel):
   else:
     list1, list2, list3, list4, list5 = [],[],[],[],[]
     p1, p2, p3, p4, p5 = [],[],[],[],[]
-    nAtoms = molecule.get_number_of_atoms()
+    nAtoms = moleculeList[0].get_number_of_atoms()
     for molecule in moleculeList:
 
+      #This is not pythonic
       list1.append(shell_move(molecule,random.randint(0,nAtoms)))
       list2.append(HighEnergyMove(molecule))
       list3.append(ball_move(molecule,random.randint(0,nAtoms)))
@@ -96,9 +97,10 @@ def smallKicks(moleculeList, inTreeLevel):
       #             .
       #listn[x] = resultOfOptimization(listn[x])
 
-    #ZOMG SAVE YOUR  MEMORYYYY
+    #ZOMG SAVE YOUR MEMORYYYY
     del moleculeList
 
+    #This is also decidedly unpythonic
     for x in range(len(list1)):
       p1.append(list1[x].get_potential_energy())
       p2.append(list2[x].get_potential_energy())
