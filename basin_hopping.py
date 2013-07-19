@@ -37,6 +37,84 @@ from InputVariables import *
 ## chosen from a Gaussian distribution in X Y and Z
 ##
 
+def mainBasinLoop(nAtoms,type1,type2,percent1,hugeMoleculeRepositoryFile):
+  """Takes number of atoms, type of atom 1, type of atom 2, percent of atom 1,
+  and the name of the file to be written to.  This function will first create
+  400 highly varied perturbations of the input molecule and minimize the potential
+  energy for each of them.  After that, it will create five new sets of 400 molecules,
+  each set being the result of that first set having one of our small perturbations
+  performed on it, which are also then minimized, perturbed, etc., until 50,000
+  total original orientations have been minimized."""
+  
+  bigKickResults, round1PE = [], []
+
+  baseAtom = makeBimetallic(hugeMoleculeRepositoryFile,nAtoms,type1,type2,percent1)
+  #FIGURE OUT WHAT THE FILENAME SHOULD BE FOR THE LINE ABOVE
+
+  for x in range(200):
+    bigKickResults.append(shake(baseAtom))
+    bigKickResults.append(switchAtoms(baseAtom))
+
+  for x in range(len(bigKickResults)):
+    #RUN THE ACTUAL OPTIMIZER
+    #dyn.FIRE() ???
+    #bigKickResults[x] = resultOfOptimization(bigKickResults[x])
+    #I will assume that when you're done this, you should get back an atom
+    # which has been optimized by the process.
+    round1PE.append(molecule.get_potential_energy())
+
+  #make this part not suck and write it to a file instead and also save the molecule
+  print "Min at this step is", min(round1PE)
+
+  #call the next step
+  smallKicks(bigKickResults,0)
+
+
+def smallKicks(moleculeList, inTreeLevel):
+  inTreeLevel += 1
+
+  if inTreeLevel == 4:
+    return None
+
+  else:
+    list1, list2, list3, list4, list5 = [],[],[],[],[]
+    p1, p2, p3, p4, p5 = [],[],[],[],[]
+    nAtoms = molecule.get_number_of_atoms()
+    for molecule in moleculeList:
+
+      list1.append(shell_move(molecule,random.randint(0,nAtoms)))
+      list2.append(HighEnergyMove(molecule))
+      list3.append(ball_move(molecule,random.randint(0,nAtoms)))
+      list4.append(smallSwitchAtoms(molecule))
+      list5.append(moveAtoms(2,molecule))
+
+    for x in range(len(moleculeList)):
+      #RUN THE OPTIMIZER THINGY AGAIN
+      #list1[x] = resultOfOptimization(list1[x])
+      #             .
+      #             .
+      #             .
+      #listn[x] = resultOfOptimization(listn[x])
+
+    #ZOMG SAVE YOUR  MEMORYYYY
+    del moleculeList
+
+    for x in range(len(list1)):
+      p1.append(list1[x].get_potential_energy())
+      p2.append(list2[x].get_potential_energy())
+      p3.append(list3[x].get_potential_energy())
+      p4.append(list4[x].get_potential_energy())
+      p5.append(list5[x].get_potential_energy())
+
+    #Pickle this part and make it not suck instead of doing this
+    print min(p1),min(p2),min(p3),min(p4),min(p5)
+
+    smallKicks(list1,inTreeLevel)
+    smallKicks(list2,inTreeLevel)
+    smallKicks(list3,inTreeLevel)
+    smallKicks(list4,inTreeLevel)
+    smallKicks(list5,inTreeLevel)
+
 def shell_move(inAtom,atomIndex):
   #  we're going to be changing the position of atomIndex inside inAtom
   #  make sure that you remove any crazy outliers before you do this
