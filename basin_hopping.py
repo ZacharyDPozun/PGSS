@@ -163,12 +163,14 @@ def jolt(inAtom,magnitude):
   inAtom.set_positions(posList)
   return inAtom
 
-def HighEnergyMove(atoms):
+def HighEnergyMove2(atoms):
     for cntr in range (len(atoms)):
         if (atoms[cntr].getNeighboringAtoms(.5) > 3):
             decideSingleMove()
         elif (atoms[cntr].getNeighboringAtoms(.5) <= 3):
             shake(atoms)
+            
+
 def ball_move(inAtom,atomIndex):
   """takes an atom defined by atomIndex inside of inAtom
   and moves it somewhere within the core of the atom randomly.
@@ -273,9 +275,9 @@ def preventExplosions(atoms):
 
 # total moves made
 
-bestEnergy = 0.
-totalMinimaFound = 0
-sinceLastFind = 0
+#bestEnergy = 0.
+#totalMinimaFound = 0
+#sinceLastFind = 0
 
 ###########################################################
 # Here is the main body of the code. We'll load our atoms #
@@ -324,4 +326,63 @@ sinceLastFind = 0
 ##ase.io.write('movie.xyz',atomslist,format='xyz') # write a movie file of our dynamics
 
 ##minimaList.close()
+
+
+def optimizeMolecule(molecule,NMoves):
+
+  bestEnergy = 0.
+  totalMinimaFound = 0
+  sinceLastFind = 0
+
+  calc = QSC()
+  molecule.set_calculator(calc)
+  minimaList = PickleTrajectory('Pt75Au25.traj',mode='a')
+
+  for i in range(NMoves):
+        molecule = newMove(molecule)
+        molecule = preventExplosions(molecule)
+        molecule.center()
+        sinceLastFind += 1
+        # do a last optimization of the structure
+        dyn = FIRE(molecule)
+        dyn.run()
+        newEnergy = molecule.get_potential_energy()
+
+        if (newEnergy < bestEnergy):
+                bestEnergy = newEnergy
+                optimizedMolecule = molecule
+                line = str(totalMinimaFound) + "  " + str(molecule.get_potential_energy()) + "  " + str(i) +"\n"
+                print line
+                f = open('EnergyList.txt','a')
+                f.write(line)
+                f.close()
+                minimaList.write(molecule)
+                totalMinimaFound += 1
+                sinceLastFind = 0
+        elif (sinceLastFind < 200):
+          return optimizedMolecule
+
+  minimaList.close()
+  minimaList = PickleTrajectory('Pt75Au25.traj',mode='r')
+
+  atomslist = [atom for atom in minimaList]
+  ase.io.write('movie.xyz',atomslist,format='xyz') # write a movie file of our dynamics
+
+  minimaList.close()
+
+def newMove(molecule):
+  decision = random.randint(1,6)
+  nAtoms = molecule.get_number_of_atoms()
+  if decision == 1:
+    molecule = shell_move(molecule,random.randint(0,nAtoms))
+  elif decision == 2:
+    molecule = HighEnergyMove(molecule)
+  elif decision == 3:
+    molecule = ball_move(molecule,random.randint(0,nAtoms))
+  elif decision == 4:
+    molecule = smallSwitchAtoms(molecule)
+  else:
+    molecule = moveAtoms(2,molecule)
+
+  return molecule
 
