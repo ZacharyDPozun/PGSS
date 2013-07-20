@@ -2,6 +2,7 @@ import ase
 import tsase
 from qsc import QSC
 from numpy import *
+import numpy
 from ase import io, optimize, md, units, Atoms
 from ase.optimize import FIRE
 from ase.io.trajectory import PickleTrajectory
