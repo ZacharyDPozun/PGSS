@@ -55,11 +55,12 @@ def temperature(CurrentStep,temperatures):
 
 NSteps=35000
 InitialTemp=5000
-bestEnergy = 0.
-totalMinimaFound = 0
 atoms = makeBimetallic('POSCAR',NAtoms,Atom1,Atom2,CompAtom1)
 calc = QSC()
 atoms.set_calculator(calc)
+opt = FIRE(atoms)
+opt.run()
+bestEnergy = 0.
 filename = str(Atom1) + '_' + str(Atom2) + '_' + str(CompAtom1) + r'.traj' + str(NAtoms)
 
 for i in range(NRuns): 

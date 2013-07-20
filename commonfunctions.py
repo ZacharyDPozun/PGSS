@@ -49,8 +49,6 @@ def makeBimetallic(filename,numberAtoms,element1,element2,fractionElement1):
                 atomicNumberArray[i] = element1
         atoms.set_atomic_numbers(atomicNumberArray)
 	atoms.center()
-	opt = FIRE(atoms)
-	opt.run()
         return atoms
         
 def distanceCenter(atoms):
