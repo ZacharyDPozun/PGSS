@@ -53,6 +53,7 @@ atoms.set_calculator(calc)
 opt = FIRE(atoms)
 opt.run()
 bestEnergy = 0.
+totalMinimaFound=0
 filename = str(Atom1) + '_' + str(Atom2) + '_' + str(CompAtom1) + r'.traj' + str(NAtoms)
 
 for i in range(NRuns): 
