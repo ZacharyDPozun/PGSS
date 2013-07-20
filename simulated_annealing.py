@@ -18,8 +18,8 @@ from ase import units, io
 from tsase import md 
 from ase.optimize import FIRE
 from ase.io.trajectory import PickleTrajectory
-from CommonFunctions import *
-
+from commonfunctions import *
+from InputVariables import *
 
 ######################################################
 # Now we are going to define a few key functions     #
@@ -57,6 +57,7 @@ NSteps=35000
 InitialTemp=5000
 bestEnergy = 0.
 totalMinimaFound = 0
+atoms = makeBimetallic('POSCAR',100,78,79,0.5)
 
 for i in range(NRuns): 
 	xfactor1 = numpy.random.random()
