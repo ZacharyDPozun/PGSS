@@ -90,6 +90,7 @@ def smallKicks(moleculeList, inTreeLevel):
       list5.append(moveAtoms(2,molecule))
 
     for x in range(len(moleculeList)):
+      pass
       #RUN THE OPTIMIZER THINGY AGAIN
       #list1[x] = resultOfOptimization(list1[x])
       #             .
