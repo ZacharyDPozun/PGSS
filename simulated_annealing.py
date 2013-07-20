@@ -57,13 +57,14 @@ NSteps=35000
 InitialTemp=5000
 bestEnergy = 0.
 totalMinimaFound = 0
-atoms = makeBimetallic('POSCAR',100,78,79,0.5)
+atoms = makeBimetallic('POSCAR',NAtoms,Atom1,Atom2,CompAtom1)
+filename = str(atom1) + '_' + str(atom2) + '_' + str(CompAtom1) + r'.traj' + str(NAtoms)
 
 for i in range(NRuns): 
 	xfactor1 = numpy.random.random()
 	yfactor1 = numpy.random.random()
 	xfactor2 = (numpy.random.random() * (1. - xfactor1)) + xfactor1
-	yfactor2 = numpy.random.random() * yfactor2
+	yfactor2 = numpy.random.random() * yfactor1
 	temperatures = generateTemperatures(InitialTemp,NSteps,xfactor1,yfactor1,xfactor2, yfactor2)
 	# do our annealing according to the schedule set above
 	atoms.center() # recenter the atoms every time, just in case
