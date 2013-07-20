@@ -63,13 +63,15 @@ atoms.set_calculator(calc)
 filename = str(Atom1) + '_' + str(Atom2) + '_' + str(CompAtom1) + r'.traj' + str(NAtoms)
 
 for i in range(NRuns): 
-	xfactor1 = numpy.random.random()
-	yfactor1 = numpy.random.random()
+	xfactor1 = numpy.random.random() * 0.5
+	yfactor1 = numpy.random.random() * 0.5
 	xfactor2 = (numpy.random.random() * (1. - xfactor1)) + xfactor1
 	yfactor2 = numpy.random.random() * yfactor1
 	temperatures = generateTemperatures(InitialTemp,NSteps,xfactor1,yfactor1,xfactor2, yfactor2)
 	# do our annealing according to the schedule set above
 	atoms.center() # recenter the atoms every time, just in case
+	dyn = tsase.md.nvtandersen(atoms, 5 * units.fs, units.kB * InitialTemp)
+	dyn.run(100) # thermalize
 	for n in range(NSteps):
 		currentTemp = temperature(n, temperatures)
 		dyn = tsase.md.nvtandersen(atoms, 5 * units.fs, units.kB * currentTemp)
