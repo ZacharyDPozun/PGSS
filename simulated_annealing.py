@@ -58,7 +58,7 @@ InitialTemp=5000
 bestEnergy = 0.
 totalMinimaFound = 0
 atoms = makeBimetallic('POSCAR',NAtoms,Atom1,Atom2,CompAtom1)
-filename = str(atom1) + '_' + str(atom2) + '_' + str(CompAtom1) + r'.traj' + str(NAtoms)
+filename = str(Atom1) + '_' + str(Atom2) + '_' + str(CompAtom1) + r'.traj' + str(NAtoms)
 
 for i in range(NRuns): 
 	xfactor1 = numpy.random.random()
