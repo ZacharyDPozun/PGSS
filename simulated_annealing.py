@@ -38,15 +38,7 @@ def generateTemperatures(T, N, xfactor1, yfactor1, xfactor2, yfactor2):
         temperature[i] = (-(temperature[int(round(N*xfactor2) -1)]) / (N * (1 - xfactor2))) * (i - N * xfactor2) + temperature[int(round(N*xfactor2) -1)]
     return temperature
 
-##
-## This function will return the current temperature
-## as a function of the total steps (NSteps), max
-## temperature (TMax) and our current step (CurrentStep)
-##
 
-def temperature(CurrentStep,temperatures): 
-	newTemp = temperatures[CurrentStep + 1]
-	return newTemp
 
 ########################################################
 # Now we can actually run our simulated annealing      #
@@ -74,7 +66,7 @@ for i in range(NRuns):
 	dyn = tsase.md.nvtandersen(atoms, 5 * units.fs, units.kB * InitialTemp)
 	dyn.run(100) # thermalize
 	for n in range(NSteps):
-		currentTemp = temperature(n, temperatures)
+		currentTemp = temperatures[n]
 		dyn = tsase.md.nvtandersen(atoms, 5 * units.fs, units.kB * currentTemp)
 		dyn.run(1)
 	# do a last optimization of the structure
