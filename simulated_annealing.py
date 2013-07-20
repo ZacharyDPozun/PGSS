@@ -58,6 +58,8 @@ InitialTemp=5000
 bestEnergy = 0.
 totalMinimaFound = 0
 atoms = makeBimetallic('POSCAR',NAtoms,Atom1,Atom2,CompAtom1)
+calc = QSC()
+atoms.set_calculator(calc)
 filename = str(Atom1) + '_' + str(Atom2) + '_' + str(CompAtom1) + r'.traj' + str(NAtoms)
 
 for i in range(NRuns): 
@@ -68,7 +70,7 @@ for i in range(NRuns):
 	temperatures = generateTemperatures(InitialTemp,NSteps,xfactor1,yfactor1,xfactor2, yfactor2)
 	# do our annealing according to the schedule set above
 	atoms.center() # recenter the atoms every time, just in case
-	for n in range(NSteps - 1):
+	for n in range(NSteps):
 		currentTemp = temperature(n, temperatures)
 		dyn = tsase.md.nvtandersen(atoms, 5 * units.fs, units.kB * currentTemp)
 		dyn.run(1)
