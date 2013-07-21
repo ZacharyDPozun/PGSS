@@ -93,7 +93,8 @@ for i in range(NRuns):
 		minimalist = PickleTrajectory(filename,mode='r')
 		atomslist = [atom for atom in minimalist]
 		minimalist.close()
-		atoms = atomslist[len(atomslist) - 1]
+		atoms.set_positions(atomslist[len(atomslist) - 1].get_positions())
+		atoms.get_potential_energy()
 		timessincelast = 0
                     
 minimaList = PickleTrajectory(filename,mode='r')
