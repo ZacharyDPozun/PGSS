@@ -91,7 +91,7 @@ for i in range(NRuns):
 		timesincelast += 1
 	if (timesincelast > 25):
 		minimalist = PickleTrajectory(filename,mode='r')
-		atomslist = [atom for atom in minimaList]
+		atomslist = [atom for atom in minimalist]
 		minimalist.close()
 		atoms = atomslist[len(atomslist) - 1]
 		timessincelast = 0
