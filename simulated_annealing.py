@@ -54,6 +54,7 @@ opt = FIRE(atoms)
 opt.run()
 bestEnergy = 0.
 totalMinimaFound=0
+timesincelast = 0
 filename = str(Atom1) + '_' + str(Atom2) + '_' + str(CompAtom1) + r'.traj' + str(NAtoms)
 
 for i in range(NRuns): 
@@ -85,6 +86,14 @@ for i in range(NRuns):
 		minimaList.write(atoms)
 		minimaList.close()
 		totalMinimaFound += 1
+		timesincelast = 0
+	else:
+		timesincelast += 1
+	if (timesincelast > 25):
+		minimalist = PickleTrajectory(filename,mode='r')
+		atomslist = [atom for atom in minimaList]
+		atoms = atomslist[len(atomslist) - 1]
+		timessincelast = 0
                     
 minimaList = PickleTrajectory(filename,mode='r')
 atomslist = [atom for atom in minimaList]
