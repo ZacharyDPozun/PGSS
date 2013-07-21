@@ -46,7 +46,7 @@ def generateTemperatures(T, N, xfactor1, yfactor1, xfactor2, yfactor2):
 ########################################################
 
 NSteps=35000
-InitialTemp=5000
+InitialTemp=4500
 atoms = makeBimetallic('POSCAR',NAtoms,Atom1,Atom2,CompAtom1)
 calc = QSC()
 atoms.set_calculator(calc)
