@@ -39,17 +39,16 @@ def nearlySphericalAtom(definingString,inRadius,number):
   newAtom = Atoms(definingString,positionList)
   return newAtom
 
-def makeBimetallic(filename,numberAtoms,element1,element2,fractionElement1):
-        atoms = ase.io.read(filename,format='vasp')
-	for i in range(numberAtoms, len(atoms)):
-		atoms.pop()
-        numberElementOne = numpy.int(len(atoms) * fractionElement1) # use integers not floats!
-        atomicNumberArray = numpy.ones(numberAtoms) * element2
-        for i in range(numberElementOne):
-                atomicNumberArray[i] = element1
-        atoms.set_atomic_numbers(atomicNumberArray)
-	atoms.center()
-        return atoms
+def makeBimetallic(molecule, numberAtoms,element1,element2,fractionElement1):
+  for i in range(numberAtoms, len(molecule)):
+    molecule.pop()
+  numberElementOne = numpy.int(len(molecule) * fractionElement1) # use integers not floats!
+  atomicNumberArray = numpy.ones(numberAtoms) * element2
+  for i in range(numberElementOne):
+    atomicNumberArray[i] = element1
+  molecule.set_atomic_numbers(atomicNumberArray)
+  molecule.center()
+  return molecule
         
 def distanceCenter(atoms):
 	distanceArray = numpy.zeros(len(atoms))
