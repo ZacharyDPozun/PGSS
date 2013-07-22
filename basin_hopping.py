@@ -267,7 +267,7 @@ def HighEnergyMove(molecule):
     if lessThanThreeA < 3:
       pass
     else:
-      chosenOne = posList.index(atom1)
+      chosenOne = numpy.where(posList==atom1)
       ball_move(molecule,chosenOne)
 
 def preventExplosions(atoms):
