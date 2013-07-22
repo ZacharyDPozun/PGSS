@@ -220,12 +220,12 @@ def smallSwitchAtoms(atoms):
   numbers = atoms.get_atomic_numbers()
   firstAtom = random.randint(0,len(numbers))
   secondAtom = random.randint(0,len(numbers))
-  if numbers[firstAtom] == numbers[secondAtom]:
-    smallSwitchAtoms(atoms)
-  else:
-    numbers[firstAtom],numbers[secondAtom] = numbers[secondAtom],numbers[firstAtom]
-    atoms.set_atomic_numbers(numbers)
-    return atoms
+  while numbers[firstAtom] == numbers[secondAtom]:
+    firstAtom = random.randint(0,len(numbers))
+    secondAtom = random.randint(0,len(numbers))
+  numbers[firstAtom],numbers[secondAtom] = numbers[secondAtom],numbers[firstAtom]
+  atoms.set_atomic_numbers(numbers)
+  return atoms
 
 def moveAtoms(numbertomove,atoms):
         totalAtoms = len(atoms)
