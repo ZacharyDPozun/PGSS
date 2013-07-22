@@ -2,7 +2,7 @@
 
 import os
 
-dirs = [i for i in range(10,301,2)]
+dirs = [i for i in range(10,201,2)]
 
 for dir in dirs:
 	os.mkdir(str(dir))
