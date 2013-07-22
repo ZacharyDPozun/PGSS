@@ -351,7 +351,7 @@ def optimizeMolecule(molecule,NMoves):
 
   calc = QSC()
   molecule.set_calculator(calc)
-  minimaList = PickleTrajectory('Au75Pt25.traj',mode='a')
+  minimaList = PickleTrajectory('Au100Pt25.traj',mode='a')
 
   for i in range(NMoves):
         molecule = newMove(molecule)
