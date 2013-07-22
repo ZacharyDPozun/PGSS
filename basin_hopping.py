@@ -8,7 +8,7 @@
 # important python libraries that we will need      #
 #####################################################
 
-from commonfunctions import *
+from commonfunctions import nearlySphericalAtom
 import ase
 import tsase
 from qsc import QSC
