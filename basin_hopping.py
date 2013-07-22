@@ -8,7 +8,7 @@
 # important python libraries that we will need      #
 #####################################################
 
-from commonfunctions import nearlySphericalAtom, makeBimetallic
+from commonfunctions import nearlySphericalAtom, makeBimetallic, distanceCenter
 import ase
 import tsase
 from qsc import QSC
@@ -267,7 +267,8 @@ def HighEnergyMove(molecule):
     if lessThanThreeA < 3:
       pass
     else:
-      ball_move(molecule,posList.index(atom1))
+      chosenOne = posList.index(atom1)
+      ball_move(molecule,chosenOne)
 
 def preventExplosions(atoms):
         positions = atoms.get_positions()
@@ -350,7 +351,7 @@ def optimizeMolecule(molecule,NMoves):
 
   calc = QSC()
   molecule.set_calculator(calc)
-  minimaList = PickleTrajectory('Pt75Au25.traj',mode='a')
+  minimaList = PickleTrajectory('Au75Pt25.traj',mode='a')
 
   for i in range(NMoves):
         molecule = newMove(molecule)
@@ -370,6 +371,8 @@ def optimizeMolecule(molecule,NMoves):
                 f = open('EnergyList.txt','a')
                 f.write(line)
                 f.close()
+		print str(optimizedMolecule)
+		print str(molecule)
                 minimaList.write(molecule)
                 totalMinimaFound += 1
                 sinceLastFind = 0
