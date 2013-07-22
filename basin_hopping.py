@@ -36,37 +36,45 @@ from InputVariables import *
 ## chosen from a Gaussian distribution in X Y and Z
 ##
 
-def mainBasinLoop(nAtoms,type1,type2,percent1,hugeMoleculeRepositoryFile):
-  """Takes number of atoms, type of atom 1, type of atom 2, percent of atom 1,
-  and the name of the file to be written to.  This function will first create
-  400 highly varied perturbations of the input molecule and minimize the potential
-  energy for each of them.  After that, it will create five new sets of 400 molecules,
+def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberOfType2, radius, percentType1):
+  """symbol1 and symbol2 should be STRINGS.
+  elementN1 and elementN2 should be ATOMIC NUMBERS of those elements.
+  numberOfType1 and numberOfType2 are the actual # of those atoms in the molecule
+  radius can be a decimal
+  percent should be expressed as a number between 0 and 1.
+
+  After that, it will create five new sets of 400 molecules,
   each set being the result of that first set having one of our small perturbations
   performed on it, which are also then minimized, perturbed, etc., until 50,000
   total original orientations have been minimized."""
-  
+
   bigKickResults, round1PE = [], []
 
-  baseAtom = makeBimetallic(hugeMoleculeRepositoryFile,nAtoms,type1,type2,percent1)
-  #FIGURE OUT WHAT THE FILENAME SHOULD BE FOR THE LINE ABOVE
+  creationString = symbol1 + str(number1) + symbol2 + str(number2)
+  print creationString
+
+  baseAtom = nearlySphericalAtom(creationString,radius,number1+number2)
+
+  baseAtom = makeBimetallic(baseAtom,nAtoms,elementN1,elementN2,percentType1)
 
   for x in range(200):
     bigKickResults.append(shake(baseAtom))
     bigKickResults.append(switchAtoms(baseAtom))
 
   for x in range(len(bigKickResults)):
-    #RUN THE ACTUAL OPTIMIZER
-    #dyn.FIRE() ???
-    #bigKickResults[x] = resultOfOptimization(bigKickResults[x])
-    #I'll assume that when you're done this, you should get back an atom
-    # which has been optimized by the process.
-    round1PE.append(molecule.get_potential_energy())
+    bigKickResults[x] = optimizeMolecule(bigKickResults[x],40)
+    round1PE.append(bigKickResults[x].get_potential_energy())
 
-  #make this part not suck and write it to a file instead and also save the molecule
-  print "Min at this step is", min(round1PE)
+  minimumPE = min(round1PE)
+  minimumIndex = round1PE.index(minimumPE)
+  bestAtom = bickKickResults[minimumIndex]
 
-  #call the next step
-  smallKicks(bigKickResults,0)
+  creationString2 = creationString + '.traj'
+  print creationString2
+  minimaList = PickleTrajectory(creationString2,atoms=bestAtom,mode = 'a')
+  minimaList.close()
+
+  #smallKicks(bigKickResults,0)
 
 
 def smallKicks(moleculeList, inTreeLevel):
