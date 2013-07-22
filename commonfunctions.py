@@ -7,7 +7,6 @@ from ase import io, optimize, md, units, Atoms
 from ase.optimize import FIRE
 from ase.io.trajectory import PickleTrajectory
 from ase.md import VelocityVerlet
-from commonfunctions import nearlySphericalAtom
 
 
 def create_sample_atom(inNumberOfAtoms,inAtomType):
