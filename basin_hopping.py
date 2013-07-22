@@ -8,7 +8,7 @@
 # important python libraries that we will need      #
 #####################################################
 
-from commonfunctions import nearlySphericalAtom
+from commonfunctions import nearlySphericalAtom, makeBimetallic
 import ase
 import tsase
 from qsc import QSC
@@ -50,18 +50,20 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
 
   bigKickResults, round1PE = [], []
 
-  creationString = symbol1 + str(number1) + symbol2 + str(number2)
+  creationString = symbol1 + str(elementN1) + symbol2 + str(elementN2)
   print creationString
 
-  baseAtom = nearlySphericalAtom(creationString,radius,number1+number2)
+  baseAtom = nearlySphericalAtom(str(creationString),radius,elementN1+elementN2)
 
-  baseAtom = makeBimetallic(baseAtom,nAtoms,elementN1,elementN2,percentType1)
+  baseAtom = makeBimetallic(baseAtom,numberOfType1+numberOfType2,elementN1,elementN2,percentType1)
 
   for x in range(200):
     bigKickResults.append(shake(baseAtom))
     bigKickResults.append(switchAtoms(baseAtom))
 
   for x in range(len(bigKickResults)):
+    print bigKickResults[x]
+    print x
     bigKickResults[x] = optimizeMolecule(bigKickResults[x],40)
     round1PE.append(bigKickResults[x].get_potential_energy())
 
@@ -71,7 +73,7 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
 
   creationString2 = creationString + '.traj'
   print creationString2
-  minimaList = PickleTrajectory(creationString2,atoms=bestAtom,mode = 'a')
+  minimaList = PickleTrajectory(str(creationString2),atoms=bestAtom,mode = 'a')
   minimaList.close()
 
   #smallKicks(bigKickResults,0)
