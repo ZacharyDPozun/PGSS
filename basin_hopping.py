@@ -8,7 +8,7 @@
 # important python libraries that we will need      #
 #####################################################
 
-from commonfunctions import nearlySphericalAtom, makeBimetallic, distanceCenter
+from commonfunctions import nearlySphericalAtom, makeBimetallic, distanceCenter, plusOrMinus
 import ase
 import tsase
 from qsc import QSC
