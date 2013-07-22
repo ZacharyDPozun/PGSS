@@ -373,7 +373,7 @@ def optimizeMolecule(molecule,NMoves):
                 f.close()
 		print str(optimizedMolecule)
 		print str(molecule)
-                minimaList.write(molecule)
+                #minimaList.write(molecule)
                 totalMinimaFound += 1
                 sinceLastFind = 0
         elif (sinceLastFind < 200):
