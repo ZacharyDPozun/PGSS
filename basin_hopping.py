@@ -54,8 +54,12 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
   print creationString
 
   baseAtom = nearlySphericalAtom(str(creationString),radius,elementN1+elementN2)
+  baseAtom.set_pbc((1,1,1))
+  baseAtom.set_cell((100,100,100))
 
   baseAtom = makeBimetallic(baseAtom,numberOfType1+numberOfType2,elementN1,elementN2,percentType1)
+  baseAtom = preventExplosions(baseAtom)
+  baseAtom = preventExplosions(baseAtom)
 
   for x in range(200):
     bigKickResults.append(shake(baseAtom))
