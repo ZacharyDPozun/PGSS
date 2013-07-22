@@ -85,46 +85,42 @@ def plusOrMinus():
     else:
         return -1
         
-def totalCost(atoms):
-    totalAtoms = len(atoms)
-    #price per gram
-    Al = 0.00220462
-    Ag = 0.62308
-    Au = 41.25
-    Cu = 0.00661
-    Ni = 0.01543
-    Pd = 24.25085
-    Pt = 45.3008
-    #create a counter for each atom
-    alCounter = 0
-    agCounter = 0
-    auCounter = 0
-    cuCounter = 0
-    niCounter = 0
-    pdCounter = 0
-    ptCounter = 0
-    i = atoms.get_chemical_symbols()
-    for element in i: #find how many atoms of each kind are in the array
-        if element == 'Al':
-            alCounter +=1
-        if element == 'Ag':
-            agCounter +=1
-        if element == 'Au':
-            auCounter +=1
-        if element == 'Cu':
-            cuCounter +=1
-        if element == 'Ni':
-            niCounter +=1
-        if element == 'Pd':
-            pdCounter +=1
-        if element == 'Pt':
-            ptCounter +=1
-    #find the % composition of each atom
-    x = alCounter/totalAtoms
-    y = agCounter/totalAtoms
-    z = auCounter/totalAtoms
-    w = cuCounter/totalAtoms
-    r = niCounter/totalAtoms
-    n = pdCounter/totalAtoms
-    m = ptCounter/totalAtoms
-    cost = (Totalatoms*(Al*x + Ag*y + Au*z + Cu*w + ni*r + Pd*n + Pt*m))
+def totalCost(molecule):
+  """Pass in the molecule and we return the price per gram"""
+  totalAtoms = molecule.get_number_of_atoms()
+  #price per gram of common metals
+  Al = 0.00220462
+  Ag = 0.62308
+  Au = 41.25
+  Cu = 0.00661
+  Ni = 0.01543
+  Pd = 24.25085
+  Pt = 45.3008
+  #counters for the common metals
+  alCounter = 0
+  agCounter = 0
+  auCounter = 0
+  cuCounter = 0
+  niCounter = 0
+  pdCounter = 0
+  ptCounter = 0
+  #get the chemical symbols of our molecule and count them up
+  symbolsList = molecule.get_chemical_symbols()
+  alCounter = symbolsList.count("Al")
+  agCounter = symbolsList.count("Ag")
+  auCounter = symbolsList.count("Au")
+  cuCounter = symbolsList.count("Cu")
+  niCounter = symbolsList.count("Ni")
+  pdCounter = symbolsList.count("Pd")
+  ptCounter = symbolsList.count("Pt")
+  #find the percentage for each metal
+  x = alCounter/totalAtoms
+  y = agCounter/totalAtoms
+  z = auCounter/totalAtoms
+  w = cuCounter/totalAtoms
+  r = niCounter/totalAtoms
+  n = pdCounter/totalAtoms
+  m = ptCounter/totalAtoms
+  #finally find the cost per gram for the entire molecule
+  cost = (Al*x + Ag*y + Au*z + Cu*w + Ni*r + Pd*n + Pt*m)
+  return cost
