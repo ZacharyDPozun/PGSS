@@ -374,7 +374,7 @@ def optimizeMolecule(molecule,NMoves):
                 totalMinimaFound += 1
                 sinceLastFind = 0
         elif (sinceLastFind < 200):
-          return optimizedMolecule
+          pass
 
   minimaList.close()
   minimaList = PickleTrajectory('Pt75Au25.traj',mode='r')
@@ -383,6 +383,8 @@ def optimizeMolecule(molecule,NMoves):
   ase.io.write('movie.xyz',atomslist,format='xyz') # write a movie file of our dynamics
 
   minimaList.close()
+  
+  return optimizedMolecule
 
 def newMove(molecule):
   decision = random.randint(1,6)
