@@ -69,17 +69,23 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
     bigKickResults[x] = optimizeMolecule(bigKickResults[x],5)
     round1PE.append(bigKickResults[x].get_potential_energy())
 
+  print "Attempt 1"
+  for x in range(len(bigKickResults)):
+    print bigKickResults[x].get_potential_energy()
+
+
   minimumPE = min(round1PE)
   minimumIndex = round1PE.index(minimumPE)
   bestAtom = bigKickResults[minimumIndex]
 
-  #creationString2 = creationString + '.traj'
-  #print creationString2
-  #minimaList = PickleTrajectory(str(creationString2),atoms=bestAtom,mode = 'a')
-  #minimaList.close()
+  creationString2 = creationString + '.traj'
+  print creationString2
+  minimaList = PickleTrajectory(str(creationString2),atoms=bestAtom,mode = 'a')
+  minimaList.close()
 
   print "Round 1 PEs:",
   print round1PE
+
 
   for x in range(len(bigKickResults)):
     print bigKickResults[x].get_potential_energy()
