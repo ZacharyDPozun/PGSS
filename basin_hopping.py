@@ -321,7 +321,7 @@ def optimizeMolecule(molecule,NMoves):
         sinceLastFind += 1
         # do a last optimization of the structure
         dyn = FIRE(molecule)
-        dyn.run()
+        dyn.run(steps = 2000)
         newEnergy = molecule.get_potential_energy()
 
         if (newEnergy < bestEnergy):
