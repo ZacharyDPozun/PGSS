@@ -66,28 +66,15 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
   for x in range(3):
     bigKickResults[x] = shake(baseAtom)
     bigKickResults[x+3] = switchAtoms(baseAtom)
-    baseAtom = nearlySphericalAtom(str(creationString),radius,elementN1+elementN2)
-    baseAtom.set_pbc((1,1,1))
-    baseAtom.set_cell((100,100,100))
-    calc = QSC()
-    baseAtom.set_calculator(calc)
-    baseAtom = makeBimetallic(baseAtom,numberOfType1+numberOfType2,elementN1,elementN2,percentType1)
-    baseAtom = preventExplosions(baseAtom)
-    baseAtom = preventExplosions(baseAtom)
+  #This needs to be thought out for a minute.
+  #The baseAtom is "immutable" throughout the whole thing,
+  #and so when it's all done, everything in the list is the same.
+  #how do we make it so that it's different each time?
 
-  #for x in range(len(bigKickResults)):
-    #bigKickResults[x] = optimizeMolecule(bigKickResults[x],3)
-    #round1PE.append(bigKickResults[x].get_potential_energy())
-
-  print bigKickResults[0] == bigKickResults[1] and bigKickResults[1] == bigKickResults[2] and bigKickResults[0] == bigKickResults[4]
-  print "The Same Already?"
-  print "Range is below:"
-  print len(bigKickResults)
-  print "bigKickResults is below:"
-  print bigKickResults
-  print "PEs are below:"
   for x in range(len(bigKickResults)):
-    print bigKickResults[x].get_potential_energy()
+    bigKickResults[x] = optimizeMolecule(bigKickResults[x],3)
+    round1PE.append(bigKickResults[x].get_potential_energy())
+
 
   minimumPE = min(round1PE)
   minimumIndex = round1PE.index(minimumPE)
