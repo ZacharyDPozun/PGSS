@@ -71,12 +71,15 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
 
   minimumPE = min(round1PE)
   minimumIndex = round1PE.index(minimumPE)
-  bestAtom = bickKickResults[minimumIndex]
+  bestAtom = bigKickResults[minimumIndex]
 
   creationString2 = creationString + '.traj'
   print creationString2
   minimaList = PickleTrajectory(str(creationString2),atoms=bestAtom,mode = 'a')
   minimaList.close()
+  
+  print bestAtom
+  print bestAtom.get_potential_energy()
 
   #smallKicks(bigKickResults,0)
 
