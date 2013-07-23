@@ -71,6 +71,7 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
     #bigKickResults[x] = optimizeMolecule(bigKickResults[x],3)
     #round1PE.append(bigKickResults[x].get_potential_energy())
 
+  print bigKickResults[0] == bigKickResults[1] and bigKickResults[1] == bigKickResults[2] and bigKickResults[0] == bigKickResults[4]
   print "The Same Already?"
   print "Range is below:"
   print len(bigKickResults)
