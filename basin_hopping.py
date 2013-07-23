@@ -48,7 +48,7 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
   performed on it, which are also then minimized, perturbed, etc., until 50,000
   total original orientations have been minimized."""
 
-  bigKickResults, round1PE = [0]*6, []
+  bigKickResults, round1PE = [], []
 
   creationString = symbol1 + str(elementN1) + symbol2 + str(elementN2)
   print creationString
@@ -63,9 +63,15 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
   baseAtom = preventExplosions(baseAtom)
   baseAtom = preventExplosions(baseAtom)
 
+  for x in range(6):
+    bigKickResults.append(baseAtom.copy())
+
   for x in range(3):
-    bigKickResults[x] = shake(baseAtom)
-    bigKickResults[x+3] = switchAtoms(baseAtom)
+    bigKickResults[x] = shake(bigKickResults[x])
+
+  for x in range(3,6):
+    bigKickResults[x] = switchAtoms(bigKickResults[x])
+
   #This needs to be thought out for a minute.
   #The baseAtom is "immutable" throughout the whole thing,
   #and so when it's all done, everything in the list is the same.
@@ -74,6 +80,9 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
   for x in range(len(bigKickResults)):
     bigKickResults[x] = optimizeMolecule(bigKickResults[x],3)
     round1PE.append(bigKickResults[x].get_potential_energy())
+
+  for x in range(len(bigKickResults)):
+    print bigKickResults[x].get_potential_energy()
 
 
   minimumPE = min(round1PE)
