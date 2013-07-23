@@ -65,9 +65,9 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
     bigKickResults.append(shake(baseAtom))
     bigKickResults.append(switchAtoms(baseAtom))
     
-    calc = QSC()
-    
+  calc = QSC()
   print "The same already??"
+  
   for x in range(len(bigKickResults)):
     bigKickResults[x].set_calculator(calc)
     print bigKickResults[x].get_potential_energy()
@@ -320,7 +320,7 @@ def optimizeMolecule(molecule,NMoves):
                 f = open('EnergyList.txt','a')
                 f.write(line)
                 f.close()
-                minimaList.write(optimizedMolecule)
+                #minimaList.write(optimizedMolecule)
                 totalMinimaFound += 1
                 sinceLastFind = 0
         elif (sinceLastFind < 200):
