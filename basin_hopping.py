@@ -64,18 +64,6 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
   for x in range(3):
     bigKickResults.append(shake(baseAtom))
     bigKickResults.append(switchAtoms(baseAtom))
-    
-  calc = QSC()
-  print "The same already??"
-  
-  print "The range is on the next line"
-  
-  print len(bigKickResults)
-  
-  for x in range(len(bigKickResults)):
-    print "HEY LOOK AT ME"
-    bigKickResults[x].set_calculator(calc)
-    print bigKickResults[x].get_potential_energy()
 
   for x in range(len(bigKickResults)):
     bigKickResults[x] = optimizeMolecule(bigKickResults[x],3)
