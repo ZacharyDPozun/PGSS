@@ -78,6 +78,9 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
   minimaList = PickleTrajectory(str(creationString2),atoms=bestAtom,mode = 'a')
   minimaList.close()
 
+  print "Round 1 PEs:",
+  print round1PE
+
   print bestAtom
   print bestAtom.get_potential_energy()
 
