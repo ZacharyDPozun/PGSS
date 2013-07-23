@@ -255,7 +255,6 @@ def moveAtoms(numbertomove,atoms):
                 positions[atomtomove,1] += displacementY
                 positions[atomtomove,2] += displacementZ
         atoms.set_positions(positions)
-        print atoms.get_potential_energy()
         return atoms
         
 def HighEnergyMove(molecule):
