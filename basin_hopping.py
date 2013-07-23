@@ -61,12 +61,12 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
   baseAtom = preventExplosions(baseAtom)
   baseAtom = preventExplosions(baseAtom)
 
-  for x in range(200):
+  for x in range(5):
     bigKickResults.append(shake(baseAtom))
     bigKickResults.append(switchAtoms(baseAtom))
 
   for x in range(len(bigKickResults)):
-    bigKickResults[x] = optimizeMolecule(bigKickResults[x],40)
+    bigKickResults[x] = optimizeMolecule(bigKickResults[x],5)
     round1PE.append(bigKickResults[x].get_potential_energy())
 
   minimumPE = min(round1PE)
@@ -77,7 +77,7 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
   print creationString2
   minimaList = PickleTrajectory(str(creationString2),atoms=bestAtom,mode = 'a')
   minimaList.close()
-  
+
   print bestAtom
   print bestAtom.get_potential_energy()
 
@@ -184,7 +184,7 @@ def HighEnergyMove2(atoms):
             decideSingleMove()
         elif (atoms[cntr].getNeighboringAtoms(.5) <= 3):
             shake(atoms)
-            
+
 
 def ball_move(inAtom,atomIndex):
   """takes an atom defined by atomIndex inside of inAtom
@@ -255,7 +255,7 @@ def moveAtoms(numbertomove,atoms):
                 positions[atomtomove,2] += displacementZ
         atoms.set_positions(positions)
         return atoms
-        
+
 def HighEnergyMove(molecule):
   posList = molecule.get_positions()
   for atom1 in posList:
@@ -282,66 +282,6 @@ def preventExplosions(atoms):
                                 positions[j] += unitDirection
         atoms.set_positions(positions)
         return atoms
-
-
-########################################################
-# Now we can actually run our basin hopping            #
-# First we need to define our initial variables        #
-########################################################
-
-# total moves made
-
-#bestEnergy = 0.
-#totalMinimaFound = 0
-#sinceLastFind = 0
-
-###########################################################
-# Here is the main body of the code. We'll load our atoms #
-# object and attach a calculator (QSC).
-###########################################################
-
-##atoms = makeBimetallic('POSCAR',NAtoms,Atom1,Atom2,CompAtom1)
-##calc = QSC()
-##atoms.set_calculator(calc)
-##minimaList = PickleTrajectory('Pt75Au25.traj',mode='a')
-
-##for i in range(NMoves):
-##      numbertomove = random.randint(len(atoms))
-##      atoms = moveAtoms(numbertomove,atoms)
-##      atoms.center()
-##
-##      atoms = preventExplosions(atoms)
-##      # do a last optimization of the structure
-##      dyn = FIRE(atoms)
-##      dyn.run()
-##      newEnergy = atoms.get_potential_energy()
-##      if (newEnergy < bestEnergy):
-##              bestEnergy = newEnergy
-##              line = str(totalMinimaFound) + "  " + str(atoms.get_potential_energy()) + "  " + str(i) +"\n"
-##              print line
-##              f = open('EnergyList.txt','a')
-##              f.write(line)
-##              f.close()
-##              minimaList.write(atoms)
-##              totalMinimaFound += 1
-##              sinceLastFind = 0
-##      elif (sinceLastFind < 200): # if we haven't found a new minimum in 200 tries, start over
-##              atoms = ase.io.read('POSCAR')
-##              calc = QSC()
-##              atoms.set_calculator(calc)
-##              atoms = makeBimetallic(atoms,79,78,0.25)
-##              sinceLastFind = 0
-
-
-
-
-##minimaList.close()
-##minimaList = PickleTrajectory('Pt75Au25.traj',mode='r')
-
-##atomslist = [atom for atom in minimaList]
-##ase.io.write('movie.xyz',atomslist,format='xyz') # write a movie file of our dynamics
-
-##minimaList.close()
 
 
 def optimizeMolecule(molecule,NMoves):
@@ -372,8 +312,8 @@ def optimizeMolecule(molecule,NMoves):
                 f = open('EnergyList.txt','a')
                 f.write(line)
                 f.close()
-		print str(optimizedMolecule)
-		print str(molecule)
+                print str(optimizedMolecule)
+                print str(molecule)
                 #minimaList.write(molecule)
                 totalMinimaFound += 1
                 sinceLastFind = 0
@@ -387,7 +327,7 @@ def optimizeMolecule(molecule,NMoves):
   ase.io.write('movie.xyz',atomslist,format='xyz') # write a movie file of our dynamics
 
   minimaList.close()
-  
+
   return optimizedMolecule
 
 def newMove(molecule):
@@ -405,4 +345,3 @@ def newMove(molecule):
     molecule = moveAtoms(2,molecule)
 
   return molecule
-
