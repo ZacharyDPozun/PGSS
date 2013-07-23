@@ -64,12 +64,8 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
   for x in range(200):
     bigKickResults.append(shake(baseAtom))
     bigKickResults.append(switchAtoms(baseAtom))
-    
-  return bigKickResults
 
   for x in range(len(bigKickResults)):
-    print bigKickResults[x]
-    print x
     bigKickResults[x] = optimizeMolecule(bigKickResults[x],40)
     round1PE.append(bigKickResults[x].get_potential_energy())
 
