@@ -66,7 +66,6 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
     bigKickResults.append(switchAtoms(baseAtom))
     
   return bigKickResults
-  break
 
   for x in range(len(bigKickResults)):
     print bigKickResults[x]
