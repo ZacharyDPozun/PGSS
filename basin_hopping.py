@@ -81,6 +81,9 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
   print "Round 1 PEs:",
   print round1PE
 
+  for x in range(len(bigKickResults)):
+    print bigKickResults[x]
+
   print bestAtom
   print bestAtom.get_potential_energy()
 
