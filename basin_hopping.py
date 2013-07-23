@@ -336,7 +336,7 @@ def optimizeMolecule(molecule,NMoves):
                 totalMinimaFound += 1
                 sinceLastFind = 0
         elif (sinceLastFind < 200):
-          pass
+          break
 
   minimaList.close()
   minimaList = PickleTrajectory('Pt75Au25.traj',mode='r')
