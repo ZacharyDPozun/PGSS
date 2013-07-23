@@ -103,7 +103,7 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
 def smallKicks(moleculeList, inTreeLevel):
   inTreeLevel += 1
 
-  if inTreeLevel == 4:
+  if inTreeLevel == 2:
     return None
 
   else:
