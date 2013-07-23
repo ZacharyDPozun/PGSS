@@ -48,7 +48,7 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
   performed on it, which are also then minimized, perturbed, etc., until 50,000
   total original orientations have been minimized."""
 
-  bigKickResults, round1PE = [], []
+  bigKickResults, round1PE = [0]*6, []
 
   creationString = symbol1 + str(elementN1) + symbol2 + str(elementN2)
   print creationString
@@ -64,9 +64,9 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
   baseAtom = preventExplosions(baseAtom)
 
   for x in range(3):
-    bigKickResults.append(shake(baseAtom))
-    bigKickResults.append(switchAtoms(baseAtom))
-
+    bigKickResults[x] = shake(baseAtom)
+    bigKickResults[x+1] = switchAtoms(baseAtom)
+    
   #for x in range(len(bigKickResults)):
     #bigKickResults[x] = optimizeMolecule(bigKickResults[x],3)
     #round1PE.append(bigKickResults[x].get_potential_energy())
