@@ -66,7 +66,14 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
   for x in range(3):
     bigKickResults[x] = shake(baseAtom)
     bigKickResults[x+3] = switchAtoms(baseAtom)
-    baseAtom = shake(baseAtom)
+    baseAtom = nearlySphericalAtom(str(creationString),radius,elementN1+elementN2)
+    baseAtom.set_pbc((1,1,1))
+    baseAtom.set_cell((100,100,100))
+    calc = QSC()
+    baseAtom.set_calculator(calc)
+    baseAtom = makeBimetallic(baseAtom,numberOfType1+numberOfType2,elementN1,elementN2,percentType1)
+    baseAtom = preventExplosions(baseAtom)
+    baseAtom = preventExplosions(baseAtom)
 
   #for x in range(len(bigKickResults)):
     #bigKickResults[x] = optimizeMolecule(bigKickResults[x],3)
