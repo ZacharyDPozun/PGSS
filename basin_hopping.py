@@ -61,17 +61,17 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
   baseAtom = preventExplosions(baseAtom)
   baseAtom = preventExplosions(baseAtom)
 
-  for x in range(5):
+  for x in range(3):
     bigKickResults.append(shake(baseAtom))
     bigKickResults.append(switchAtoms(baseAtom))
-
-  for x in range(len(bigKickResults)):
-    bigKickResults[x] = optimizeMolecule(bigKickResults[x],5)
-    round1PE.append(bigKickResults[x].get_potential_energy())
-
-  print "Attempt 1"
+    
+  print "The same already??"
   for x in range(len(bigKickResults)):
     print bigKickResults[x].get_potential_energy()
+
+  for x in range(len(bigKickResults)):
+    bigKickResults[x] = optimizeMolecule(bigKickResults[x],3)
+    round1PE.append(bigKickResults[x].get_potential_energy())
 
 
   minimumPE = min(round1PE)
@@ -82,13 +82,6 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
   print creationString2
   minimaList = PickleTrajectory(str(creationString2),atoms=bestAtom,mode = 'a')
   minimaList.close()
-
-  print "Round 1 PEs:",
-  print round1PE
-
-
-  for x in range(len(bigKickResults)):
-    print bigKickResults[x].get_potential_energy()
 
   print bestAtom
   print bestAtom.get_potential_energy()
@@ -324,9 +317,7 @@ def optimizeMolecule(molecule,NMoves):
                 f = open('EnergyList.txt','a')
                 f.write(line)
                 f.close()
-                print str(optimizedMolecule)
-                print str(molecule)
-                #minimaList.write(molecule)
+                minimaList.write(optimizedMolecule)
                 totalMinimaFound += 1
                 sinceLastFind = 0
         elif (sinceLastFind < 200):
