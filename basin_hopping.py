@@ -267,10 +267,11 @@ def HighEnergyMove(molecule):
       if distanceBetween < 3.0:
         lessThanThreeA += 1
     if lessThanThreeA < 3:
-      pass
+      return molecule
     else:
       chosenOne = numpy.where(posList==atom1)
-      ball_move(molecule,chosenOne)
+      molecule = ball_move(molecule,chosenOne)
+      return molecule
 
 def preventExplosions(atoms):
         positions = atoms.get_positions()
