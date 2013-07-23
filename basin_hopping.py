@@ -97,7 +97,7 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
   print bestAtom
   print bestAtom.get_potential_energy()
 
-  #smallKicks(bigKickResults,0)
+  smallKicks(bigKickResults,0)
 
 
 def smallKicks(moleculeList, inTreeLevel):
@@ -109,26 +109,30 @@ def smallKicks(moleculeList, inTreeLevel):
   else:
     list1, list2, list3, list4, list5 = [],[],[],[],[]
     p1, p2, p3, p4, p5 = [],[],[],[],[]
-    nAtoms = moleculeList[0].get_number_of_atoms()
-    for molecule in moleculeList:
-
-      #This is not pythonic
-      list1.append(shell_move(molecule,random.randint(0,nAtoms)))
-      list2.append(HighEnergyMove(molecule))
-      list3.append(ball_move(molecule,random.randint(0,nAtoms)))
-      list4.append(smallSwitchAtoms(molecule))
-      list5.append(moveAtoms(2,molecule))
+    nAtoms = moleculeList[0].get_number_of_atoms() #they should all have the same number
 
     for x in range(len(moleculeList)):
-      pass
-      #RUN THE OPTIMIZER THINGY AGAIN
-      #list1[x] = resultOfOptimization(list1[x])
-      #             .
-      #             .
-      #             .
-      #listn[x] = resultOfOptimization(listn[x])
+      list1.append(moleculeList[x].copy())
+      list2.append(moleculeList[x].copy())
+      list3.append(moleculeList[x].copy())
+      list4.append(moleculeList[x].copy())
+      list5.append(moleculeList[x].copy())
 
-    #ZOMG SAVE YOUR MEMORYYYY
+    for x in range(len(list1)): #but they should all be the same length
+      list1[x] = shell_move(list1[x],random.randint(0,nAtoms))
+      list2[x] = HighEnergyMove(list2[x])
+      list3[x] = ball_move(list3[x],random.randint(0,nAtoms))
+      list4[x] = smallSwitchAtoms(list4[x])
+      list5[x] = moveAtoms(2,list5[x])
+
+
+    for x in range(len(list1)): #again, should all be the same length
+      list1[x] = optimizeMolecule(list1[x],3)
+      list2[x] = optimizeMolecule(list2[x],3)
+      list3[x] = optimizeMolecule(list3[x],3)
+      list4[x] = optimizeMolecule(list4[x],3)
+      list5[x] = optimizeMolecule(list5[x],3)
+
     del moleculeList
 
     #This is also decidedly unpythonic
