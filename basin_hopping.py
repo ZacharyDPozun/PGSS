@@ -66,7 +66,7 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
   for x in range(3):
     bigKickResults[x] = shake(baseAtom)
     bigKickResults[x+1] = switchAtoms(baseAtom)
-    
+
   #for x in range(len(bigKickResults)):
     #bigKickResults[x] = optimizeMolecule(bigKickResults[x],3)
     #round1PE.append(bigKickResults[x].get_potential_energy())
@@ -75,6 +75,8 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
   print "The Same Already?"
   print "Range is below:"
   print len(bigKickResults)
+  print "bigKickResults is below:"
+  print bigKickResults
   print "PEs are below:"
   for x in range(len(bigKickResults)):
     print bigKickResults[x].get_potential_energy()
