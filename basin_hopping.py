@@ -56,6 +56,8 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
   baseAtom = nearlySphericalAtom(str(creationString),radius,elementN1+elementN2)
   baseAtom.set_pbc((1,1,1))
   baseAtom.set_cell((100,100,100))
+  calc = QSC()
+  baseAtom.set_calculator(calc)
 
   baseAtom = makeBimetallic(baseAtom,numberOfType1+numberOfType2,elementN1,elementN2,percentType1)
   baseAtom = preventExplosions(baseAtom)
@@ -65,10 +67,16 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
     bigKickResults.append(shake(baseAtom))
     bigKickResults.append(switchAtoms(baseAtom))
 
-  for x in range(len(bigKickResults)):
-    bigKickResults[x] = optimizeMolecule(bigKickResults[x],3)
-    round1PE.append(bigKickResults[x].get_potential_energy())
+  #for x in range(len(bigKickResults)):
+    #bigKickResults[x] = optimizeMolecule(bigKickResults[x],3)
+    #round1PE.append(bigKickResults[x].get_potential_energy())
 
+  print "The Same Already?"
+  print "Range is below:"
+  print len(bigKickResults)
+  print "PEs are below:"
+  for x in range(len(bigKickResults)):
+    print bigKickResults[x].get_potential_energy()
 
   minimumPE = min(round1PE)
   minimumIndex = round1PE.index(minimumPE)
