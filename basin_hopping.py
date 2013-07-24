@@ -313,7 +313,7 @@ def optimizeMolecule(molecule,NMoves,creationString):
 
   calc = QSC()
   molecule.set_calculator(calc)
-  minimaList = PickleTrajectory(str(creationString),mode='a')
+  minimaList = PickleTrajectory('meaninglessFileName.traj',mode='a')
 
   for i in range(NMoves):
         molecule = newMove(molecule)
