@@ -8,6 +8,8 @@
 # important python libraries that we will need      #
 #####################################################
 
+
+
 from commonfunctions import nearlySphericalAtom, makeBimetallic, distanceCenter, plusOrMinus
 import ase
 import tsase
@@ -25,16 +27,16 @@ import pylab
 from mpl_toolkits.mplot3d import Axes3D
 from InputVariables import *
 
+#some global variables for convenience:
+listLength = 400
+treeDepth = 4
+FIREMoves = 40000
+
 
 ######################################################
 # Now we are going to define a few key functions     #
 ######################################################
 
-##
-## This function makes our move. We give a number of atoms
-## to move and it moves that many atoms each in a direction
-## chosen from a Gaussian distribution in X Y and Z
-##
 
 def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberOfType2, radius, percentType1):
   """symbol1 and symbol2 should be STRINGS.
@@ -51,7 +53,7 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
   bigKickResults, round1PE = [], []
 
   creationString = symbol1 + str(elementN1) + symbol2 + str(elementN2)
-  print creationString
+  creationString2 = creationString + '.traj'
 
   baseAtom = nearlySphericalAtom(str(creationString),radius,elementN1+elementN2)
   baseAtom.set_pbc((1,1,1))
@@ -63,47 +65,35 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
   baseAtom = preventExplosions(baseAtom)
   baseAtom = preventExplosions(baseAtom)
 
-  for x in range(6):
+  for x in range(listLength):
     bigKickResults.append(baseAtom.copy())
 
-  for x in range(3):
+  for x in range(listLength/2):
     bigKickResults[x] = shake(bigKickResults[x])
 
-  for x in range(3,6):
+  for x in range(listLength/2, listLength):
     bigKickResults[x] = switchAtoms(bigKickResults[x])
 
-  #This needs to be thought out for a minute.
-  #The baseAtom is "immutable" throughout the whole thing,
-  #and so when it's all done, everything in the list is the same.
-  #how do we make it so that it's different each time?
-
   for x in range(len(bigKickResults)):
-    bigKickResults[x] = optimizeMolecule(bigKickResults[x],3)
+    bigKickResults[x] = optimizeMolecule(bigKickResults[x],FIREMoves,creationString2)
     round1PE.append(bigKickResults[x].get_potential_energy())
-
-  for x in range(len(bigKickResults)):
-    print bigKickResults[x].get_potential_energy()
-
 
   minimumPE = min(round1PE)
   minimumIndex = round1PE.index(minimumPE)
   bestAtom = bigKickResults[minimumIndex]
 
-  creationString2 = creationString + '.traj'
-  print creationString2
-  minimaList = PickleTrajectory(str(creationString2),atoms=bestAtom,mode = 'a')
+  minimaList = PickleTrajectory(str(creationString2),mode='a')
+  minimaList.write(bestAtom)
   minimaList.close()
 
-  print bestAtom
-  print bestAtom.get_potential_energy()
-
-  smallKicks(bigKickResults,0)
+  smallKicks(bigKickResults,0,creationString2)
 
 
-def smallKicks(moleculeList, inTreeLevel):
+def smallKicks(moleculeList, inTreeLevel, creationString):
   inTreeLevel += 1
 
-  if inTreeLevel == 2:
+  if inTreeLevel == treeDepth:
+    print " #YOLODUBSTEP  #WUBWUBWUB "
     return None
 
   else:
@@ -127,12 +117,13 @@ def smallKicks(moleculeList, inTreeLevel):
 
 
     for x in range(len(list1)): #again, should all be the same length
-      list1[x] = optimizeMolecule(list1[x],3)
-      list2[x] = optimizeMolecule(list2[x],3)
-      list3[x] = optimizeMolecule(list3[x],3)
-      list4[x] = optimizeMolecule(list4[x],3)
-      list5[x] = optimizeMolecule(list5[x],3)
+      list1[x] = optimizeMolecule(list1[x],FIREMoves,creationString)
+      list2[x] = optimizeMolecule(list2[x],FIREMoves,creationString)
+      list3[x] = optimizeMolecule(list3[x],FIREMoves,creationString)
+      list4[x] = optimizeMolecule(list4[x],FIREMoves,creationString)
+      list5[x] = optimizeMolecule(list5[x],FIREMoves,creationString)
 
+    del moleculeList[:]
     del moleculeList
 
     #This is also decidedly unpythonic
@@ -143,14 +134,24 @@ def smallKicks(moleculeList, inTreeLevel):
       p4.append(list4[x].get_potential_energy())
       p5.append(list5[x].get_potential_energy())
 
-    #Pickle this part and make it not suck instead of doing this
-    print min(p1),min(p2),min(p3),min(p4),min(p5)
+    #p1min = (MIN)imum PE.  p1mi = (M)inimum (I)ndex.  p1b = (B)est.
+    p1min, p2min, p3min, p4min, p5min = min(p1),min(p2),min(p3),min(p4),min(p5)
+    p1mi, p2mi, p3mi, p4mi, p5mi = p1.index(p1min), p2.index(p2min), p3.index(p3min), p4.index(p4min), p5.index(p5min)
+    p1b, p2b, p3b, p4b, p5b = p1[p1mi],p2[p2mi],p3[p3mi],p4[p4mi],p5[p5mi]
 
-    smallKicks(list1,inTreeLevel)
-    smallKicks(list2,inTreeLevel)
-    smallKicks(list3,inTreeLevel)
-    smallKicks(list4,inTreeLevel)
-    smallKicks(list5,inTreeLevel)
+    minimaList = PickleTrajectory(str(creationString),mode='a')
+    minimaList.write(p1b)
+    minimaList.write(p2b)
+    minimaList.write(p3b)
+    minimaList.write(p4b)
+    minimaList.write(p5b)
+    minimaList.close()
+
+    smallKicks(list1,inTreeLevel,creationString)
+    smallKicks(list2,inTreeLevel,creationString)
+    smallKicks(list3,inTreeLevel,creationString)
+    smallKicks(list4,inTreeLevel,creationString)
+    smallKicks(list5,inTreeLevel,creationString)
 
 def shell_move(inAtom,atomIndex):
   #  we're going to be changing the position of atomIndex inside inAtom
@@ -304,7 +305,7 @@ def preventExplosions(atoms):
         return atoms
 
 
-def optimizeMolecule(molecule,NMoves):
+def optimizeMolecule(molecule,NMoves,creationString):
 
   bestEnergy = 0.
   totalMinimaFound = 0
@@ -312,7 +313,7 @@ def optimizeMolecule(molecule,NMoves):
 
   calc = QSC()
   molecule.set_calculator(calc)
-  minimaList = PickleTrajectory('Au100Pt25.traj',mode='a')
+  minimaList = PickleTrajectory(str(creationString),mode='a')
 
   for i in range(NMoves):
         molecule = newMove(molecule)
@@ -332,14 +333,16 @@ def optimizeMolecule(molecule,NMoves):
                 f = open('EnergyList.txt','a')
                 f.write(line)
                 f.close()
-                #minimaList.write(optimizedMolecule)
+                minimaList.write(optimizedMolecule)
                 totalMinimaFound += 1
                 sinceLastFind = 0
         elif (sinceLastFind < 200):
           break
 
+
   minimaList.close()
-  minimaList = PickleTrajectory('Pt75Au25.traj',mode='r')
+
+  minimaList = PickleTrajectory(creationString,mode='r')
 
   atomslist = [atom for atom in minimaList]
   ase.io.write('movie.xyz',atomslist,format='xyz') # write a movie file of our dynamics
