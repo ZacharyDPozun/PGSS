@@ -333,7 +333,6 @@ def optimizeMolecule(molecule,NMoves,creationString):
                 f = open('EnergyList.txt','a')
                 f.write(line)
                 f.close()
-                print optimizedMolecule.get_number_of_atoms()
                 minimaList.write(optimizedMolecule)
                 totalMinimaFound += 1
                 sinceLastFind = 0
@@ -362,8 +361,7 @@ def newMove(molecule):
   elif decision == 3:
     molecule = ball_move(molecule,random.randint(0,nAtoms))
   elif decision == 4:
-    pass
-    #molecule = smallSwitchAtoms(molecule)
+    molecule = smallSwitchAtoms(molecule)
   else:
     molecule = moveAtoms(2,molecule)
 
