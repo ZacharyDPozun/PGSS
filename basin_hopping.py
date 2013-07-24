@@ -333,6 +333,7 @@ def optimizeMolecule(molecule,NMoves,creationString):
                 f = open('EnergyList.txt','a')
                 f.write(line)
                 f.close()
+                print optimizedMolecule.get_number_of_atoms()
                 minimaList.write(optimizedMolecule)
                 totalMinimaFound += 1
                 sinceLastFind = 0
