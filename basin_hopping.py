@@ -298,7 +298,8 @@ def preventExplosions(atoms):
                 for j in range(len(atoms)):
                         distance = numpy.sqrt(numpy.dot((positions[j] - positions[i]),(positions[j] - positions[i])))
                         if ((distance < 1.5) and (i != j)):
-                                #print i, j, distance
+                                print i, j, distance
+                                import pdb; pdb.set_trace()
                                 unitDirection = (positions[j] - positions[i]) / distance
                                 positions[j] += unitDirection
         atoms.set_positions(positions)
@@ -333,7 +334,6 @@ def optimizeMolecule(molecule,NMoves,creationString):
                 f = open('EnergyList.txt','a')
                 f.write(line)
                 f.close()
-                import pdb; pdb.set_trace()
                 minimaList.write(optimizedMolecule)
                 totalMinimaFound += 1
                 sinceLastFind = 0
