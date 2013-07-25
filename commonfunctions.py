@@ -87,6 +87,7 @@ def plusOrMinus():
 def totalCost(molecule):
   """Pass in the molecule and we return the price per gram"""
   totalAtoms = molecule.get_number_of_atoms()
+  totalAtoms *= 1.0
   #price per gram of common metals
   Al = 0.00220462
   Ag = 0.62308
