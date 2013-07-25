@@ -21,6 +21,20 @@ def returnFinalBestAtom(trajectoryFile):
   minimumPotenialEnergy = min(potentialEnergyList)
   indexOfMinimumPotentialEnergy = potentialEnergyList.index(minimumPotenialEnergy)
   bestAtom = molecules[indexOfMinimumPotentialEnergy].copy()
+  
+  print "Best PE Follows"
+  print minimumPotentialEnergy
+  
+  bestAtom.set_calculator(QSC())
+  
+  print "bestAtom PE Follows"
+  print bestAtom.get_potential_energy()
+  
+  bookFile = open('BestEnergies.txt', mode = 'a')
+  line = str(trajectoryFile), str(bestAtom.get_potential_energy()), str(indexOfMinimumPotentialEnergy)
+  bookFile.write(line)
+  bookFile.close()
+  
   print "Yes We Can"
   return bestAtom
 
