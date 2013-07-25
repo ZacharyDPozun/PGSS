@@ -138,7 +138,7 @@ def smallKicks(moleculeList, inTreeLevel, creationString):
     #p1min = (MIN)imum PE.  p1mi = (M)inimum (I)ndex.  p1b = (B)est.
     p1min, p2min, p3min, p4min, p5min = min(p1),min(p2),min(p3),min(p4),min(p5)
     p1mi, p2mi, p3mi, p4mi, p5mi = p1.index(p1min), p2.index(p2min), p3.index(p3min), p4.index(p4min), p5.index(p5min)
-    p1b, p2b, p3b, p4b, p5b = p1[p1mi],p2[p2mi],p3[p3mi],p4[p4mi],p5[p5mi]
+    p1b, p2b, p3b, p4b, p5b = list1[p1mi],list2[p2mi],list3[p3mi],list4[p4mi],list5[p5mi]
 
     minimaList = PickleTrajectory(str(creationString),mode='a')
     minimaList.write(p1b)
