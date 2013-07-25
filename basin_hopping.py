@@ -26,7 +26,7 @@ import operator
 from matplotlib import pyplot
 import pylab
 from mpl_toolkits.mplot3d import Axes3D
-from InputVariables import *
+
 
 #some global variables for convenience:
 listLength = 6
