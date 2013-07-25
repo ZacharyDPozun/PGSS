@@ -28,9 +28,10 @@ from mpl_toolkits.mplot3d import Axes3D
 from InputVariables import *
 
 #some global variables for convenience:
-listLength = 50
-treeDepth = 3
-FIREMoves = 100
+listLength = 8
+treeDepth = 2
+FIREMoves = 10
+finalList = []
 
 
 ######################################################
@@ -51,6 +52,7 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
   total original orientations have been minimized."""
 
   bigKickResults, round1PE = [], []
+  global finalList
 
   creationString = symbol1 + str(numberOfType1) + symbol2 + str(numberOfType2)
   creationString2 = creationString + '.traj'
@@ -86,12 +88,17 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
   minimaList = PickleTrajectory(str(creationString2),mode='a')
   minimaList.write(bestAtom)
   minimaList.close()
+  
+  finalList.append(bestAtom.copy())
 
   smallKicks(bigKickResults,0,creationString2)
+  
+  return finalList
 
 
 def smallKicks(moleculeList, inTreeLevel, creationString):
   inTreeLevel += 1
+  global finalList
 
   if inTreeLevel == treeDepth:
     print " #YOLODUBSTEP  #WUBWUBWUB "
@@ -147,6 +154,18 @@ def smallKicks(moleculeList, inTreeLevel, creationString):
     minimaList.write(p4b)
     minimaList.write(p5b)
     minimaList.close()
+    
+    
+    if p1min < finalList[len(finalList)-1]:
+      finalList.append(p1b.copy())
+    if p2min < finalList[len(finalList)-1]:
+      finalList.append(p2b.copy())
+    if p3min < finalList[len(finalList)-1]:
+      finalList.append(p3b.copy())
+    if p4min < finalList[len(finalList)-1]:
+      finalList.append(p4b.copy())
+    if p5min < finalList[len(finalList)-1]:
+      finalList.append(p5b.copy())
 
     smallKicks(list1,inTreeLevel,creationString)
     smallKicks(list2,inTreeLevel,creationString)
