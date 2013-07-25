@@ -23,3 +23,14 @@ def returnFinalBestAtom(trajectoryFile):
   bestAtom = molecules[indexOfMinimumPotentialEnergy].copy()
   print "Yes We Can"
   return bestAtom
+
+def writeBestEnergyIntoFile(trajectoryFile,molecule):
+  bookkeepingFile = open('BestEnergies.txt', mode = 'a')
+  candidates = PickleTrajectory(str(trajectoryFile),mode='r')
+  molecules = [molecule for molecule in candidates]
+  potentialEnergyList = [molecule.get_potential_energy() for molecule in molecules]
+  minimumPotenialEnergy = min(potentialEnergyList)
+  indexOfMinimumPotentialEnergy = potentialEnergyList.index(minimumPotenialEnergy)
+  line = str(trajectoryFile) + str(molecule.get_potential_energy()) + str(indexOfMinimumPotentialEnergy)
+  bookkeepingFile.write(line)
+  bookkeepingFile.close()
