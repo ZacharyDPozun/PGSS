@@ -127,11 +127,20 @@ def totalCost(molecule):
 
 def coreshellCohesive(atoms):
 	from copy import deepcopy
+	calc = atoms.get_calculator()
+	atoms.set_calculator(None)
+	whole = deepcopy(atoms)
 	shell = deepcopy(atoms)
 	core = deepcopy(atoms)
-	for i in range(140,225):
+	for i in range(140,226):
 		shell.pop(140)
 	for i in range(140):
 		core.pop(0)
-	energy = (atoms.get_potential_energy() - shell.get_potential_energy() - core.get_potential_energy()) * -1.0 / 225.
+	core.pop(85)
+	whole.pop(225)
+	atoms.set_calculator(calc)
+	core.set_calculator(calc)
+	shell.set_calculator(calc)
+	whole.set_calculator(calc)
+	energy = (whole.get_potential_energy() - shell.get_potential_energy() - core.get_potential_energy()) * -1.0 / 225.
 	return energy
