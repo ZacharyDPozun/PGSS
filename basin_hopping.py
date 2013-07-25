@@ -61,9 +61,10 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
   calc = QSC()
   baseAtom.set_calculator(calc)
 
-  pbc.set_trace()
+  import pdb
+  pdb.set_trace()
   baseAtom = makeBimetallic(baseAtom,numberOfType1+numberOfType2,elementN1,elementN2,percentType1)
-  pbc.set_trace()
+  pdb.set_trace()
   baseAtom = preventExplosions(baseAtom)
   baseAtom = preventExplosions(baseAtom)
 
