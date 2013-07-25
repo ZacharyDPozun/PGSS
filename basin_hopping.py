@@ -96,7 +96,7 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
   
   print "Note that we have gotten this far"
   
-  veryBestAtom = returnFinalBestAtom(str(creationString2))
+  veryBestAtom = returnFinalBestAtom(str(creationString2), str(creationString))
   
   return veryBestAtom
 
