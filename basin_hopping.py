@@ -361,7 +361,8 @@ def newMove(molecule):
   elif decision == 3:
     molecule = ball_move(molecule,random.randint(0,nAtoms))
   elif decision == 4:
-    molecule = smallSwitchAtoms(molecule)
+    #molecule = smallSwitchAtoms(molecule)
+    pass
   else:
     molecule = moveAtoms(2,molecule)
 
