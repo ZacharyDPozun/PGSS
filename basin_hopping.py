@@ -332,6 +332,7 @@ def optimizeMolecule(molecule,NMoves,creationString):
                 f = open('EnergyList.txt','a')
                 f.write(line)
                 f.close()
+                import pdb; pdb.set_trace()
                 minimaList.write(molecule)
                 totalMinimaFound += 1
                 sinceLastFind = 0
