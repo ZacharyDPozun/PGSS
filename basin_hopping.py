@@ -55,7 +55,7 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
   creationString = symbol1 + str(numberOfType1) + symbol2 + str(numberOfType2)
   creationString2 = creationString + '.traj'
 
-  baseAtom = nearlySphericalAtom(str(creationString),radius,elementN1+elementN2)
+  baseAtom = nearlySphericalAtom(str(creationString),radius,numberOfType1+numberOfType2)
   baseAtom.set_pbc((1,1,1))
   baseAtom.set_cell((100,100,100))
   calc = QSC()
