@@ -52,7 +52,7 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
 
   bigKickResults, round1PE = [], []
 
-  creationString = symbol1 + str(elementN1) + symbol2 + str(elementN2)
+  creationString = symbol1 + str(numberOfType1) + symbol2 + str(numberOfType2)
   creationString2 = creationString + '.traj'
 
   baseAtom = nearlySphericalAtom(str(creationString),radius,elementN1+elementN2)
