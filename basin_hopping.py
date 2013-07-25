@@ -256,7 +256,7 @@ def smallSwitchAtoms(atoms):
   posList = atoms.get_positions()
   firstPosition = random.randint(0,len(posList))
   secondPosition = random.randint(0,len(posList))
-  while (posList[firstPosition] == posList[secondPosition]):
+  while (list(posList[firstPosition]) == list(posList[secondPosition])):
     firstPosition = random.randint(0,len(posList))
     secondPosition = random.randint(0,len(posList))
   posList[firstPosition],posList[secondPosition] = posList[secondPosition],posList[firstPosition]
