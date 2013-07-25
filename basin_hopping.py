@@ -98,8 +98,6 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
   
   veryBestAtom = returnFinalBestAtom(str(creationString2))
   
-  writeBestEnergyIntoFile(str(creationString2),veryBestAtom)
-  
   return veryBestAtom
 
 
