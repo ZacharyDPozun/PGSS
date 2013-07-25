@@ -161,3 +161,23 @@ def oxygenBinding(atoms):
 	whole.set_calculator(calc)
 	energy = (whole.get_potential_energy() - particle.get_potential_energy() - oxygen.get_potential_energy()) * -1.0
 	return energy
+	
+def fitnessCalc(molecules):
+    fitnessPercentages = []
+    fitnessValues = getFitnessValues(molecules)
+    fitnessPercentages[fitnessValues.index(max(fitnessValues))] = 1
+    for cntr in len(fitnessValues):
+        fitnessPercentages[cntr] = fitnessValues.get(cntr)/max(fitnessValues)
+
+
+def getFitnessValues(molecules):
+    fitnessValues = []
+    for cntr in len(molecules):
+        molecularMass = sum(molecules[cntr].get_masses())
+        costPerGram = 1.0 * totalCost(fitnessInfo.get(cntr))/molecularMass
+        scalarCost = 1.25 * ((math.log(costPerGram, 10) + 2.65) / (4.3))
+        scalarCoreEnergy = 1.0 * coreBinding(molecules.get(cntr)) / 2
+        scalarOxygenEnergy = 1.0 * oxygenBinding(molecules.get(cntr)) / 2
+        fitnessValues.append(scalarCoreEnergy + scalarOxygenEnergy + scalarCost)
+    return fitnessValues
+
