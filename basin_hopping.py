@@ -11,6 +11,7 @@
 
 
 from commonfunctions import nearlySphericalAtom, makeBimetallic, distanceCenter, plusOrMinus
+from returnFinalBestAtom import *
 import ase
 import tsase
 from qsc import QSC
@@ -93,7 +94,11 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
 
   smallKicks(bigKickResults,0,creationString2)
   
-  return finalList
+  print "Note that we have gotten this far"
+  
+  veryBestAtom = returnFinalBestAtom(str(creationString2))
+  
+  return veryBestAtom
 
 
 def smallKicks(moleculeList, inTreeLevel, creationString):
