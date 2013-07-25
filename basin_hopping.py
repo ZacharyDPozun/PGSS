@@ -313,7 +313,7 @@ def optimizeMolecule(molecule,NMoves,creationString):
 
   calc = QSC()
   molecule.set_calculator(calc)
-  minimaList = PickleTrajectory(str(creationString),"a", molecule)
+  minimaList = PickleTrajectory(str(creationString),mode='a')
 
   for i in range(NMoves):
         molecule = newMove(molecule)
@@ -327,7 +327,7 @@ def optimizeMolecule(molecule,NMoves,creationString):
 
         if (newEnergy < bestEnergy):
                 bestEnergy = newEnergy
-                optimizedMolecule = molecule
+                optimizedMolecule = molecule.copy()
                 line = str(totalMinimaFound) + "  " + str(molecule.get_potential_energy()) + "  " + str(i) +"\n"
                 print line
                 f = open('EnergyList.txt','a')
@@ -342,7 +342,7 @@ def optimizeMolecule(molecule,NMoves,creationString):
 
   minimaList.close()
 
-  minimaList = PickleTrajectory(creationString,mode='r')
+  minimaList = PickleTrajectory(str(creationString),mode='r')
 
   atomslist = [atom for atom in minimaList]
   ase.io.write('movie.xyz',atomslist,format='xyz') # write a movie file of our dynamics
