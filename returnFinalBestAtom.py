@@ -31,7 +31,8 @@ def returnFinalBestAtom(trajectoryFile):
   print bestAtom.get_potential_energy()
   
   bookFile = open('BestEnergies.txt', mode = 'a')
-  line = str(trajectoryFile) + " " + str(bestAtom.get_potential_energy()) + " " + str(indexOfMinimumPotentialEnergy)
+  line = str(trajectoryFile) + " " + str(bestAtom.get_potential_energy()) + " " +
+         str(indexOfMinimumPotentialEnergy) + "\n"
   bookFile.write(line)
   bookFile.close()
   
