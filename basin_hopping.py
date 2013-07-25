@@ -327,13 +327,12 @@ def optimizeMolecule(molecule,NMoves,creationString):
 
         if (newEnergy < bestEnergy):
                 bestEnergy = newEnergy
-                optimizedMolecule = molecule.copy()
                 line = str(totalMinimaFound) + "  " + str(molecule.get_potential_energy()) + "  " + str(i) +"\n"
                 print line
                 f = open('EnergyList.txt','a')
                 f.write(line)
                 f.close()
-                minimaList.write(optimizedMolecule)
+                minimaList.write(molecule)
                 totalMinimaFound += 1
                 sinceLastFind = 0
         elif (sinceLastFind < 200):
@@ -349,7 +348,7 @@ def optimizeMolecule(molecule,NMoves,creationString):
 
   minimaList.close()
 
-  return optimizedMolecule
+  return molecule
 
 def newMove(molecule):
   decision = random.randint(1,6)
