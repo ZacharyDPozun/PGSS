@@ -22,13 +22,7 @@ def returnFinalBestAtom(trajectoryFile,imageFile):
   indexOfMinimumPotentialEnergy = potentialEnergyList.index(minimumPotentialEnergy)
   bestAtom = molecules[indexOfMinimumPotentialEnergy].copy()
   
-  print "Best PE Follows"
-  print minimumPotentialEnergy
-  
   bestAtom.set_calculator(QSC())
-  
-  print "bestAtom PE Follows"
-  print bestAtom.get_potential_energy()
   
   bookFile = open('BestEnergies.txt', mode = 'a')
   line = str(trajectoryFile) + " " + str(bestAtom.get_potential_energy()) + " " + str(indexOfMinimumPotentialEnergy) + "\n"
@@ -38,8 +32,7 @@ def returnFinalBestAtom(trajectoryFile,imageFile):
   imageFileName = str(imageFile) + '.png'
   
   ase.io.write(str(imageFileName),bestAtom,format = 'png')
-  
-  print "Yes We Can"
+
   return bestAtom
 
 def writeBestEnergyIntoFile(trajectoryFile,molecule):
