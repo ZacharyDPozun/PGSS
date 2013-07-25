@@ -127,11 +127,57 @@ def totalCost(molecule):
 
 def coreshellCohesive(atoms):
 	from copy import deepcopy
+	calc = atoms.get_calculator()
+	atoms.set_calculator(None)
+	whole = deepcopy(atoms)
 	shell = deepcopy(atoms)
 	core = deepcopy(atoms)
-	for i in range(140,225):
+	for i in range(140,226):
 		shell.pop(140)
 	for i in range(140):
 		core.pop(0)
-	energy = (atoms.get_potential_energy() - shell.get_potential_energy() - core.get_potential_energy()) * -1.0 / 225.
+	core.pop(85)
+	whole.pop(225)
+	atoms.set_calculator(calc)
+	core.set_calculator(calc)
+	shell.set_calculator(calc)
+	whole.set_calculator(calc)
+	energy = (whole.get_potential_energy() - shell.get_potential_energy() - core.get_potential_energy()) * -1.0 / 225.
 	return energy
+
+def oxygenBinding(atoms):
+	from copy import deepcopy
+	calc = atoms.get_calculator()
+	atoms.set_calculator(None)
+	whole = deepcopy(atoms)
+	particle = deepcopy(atoms)
+	oxygen = deepcopy(atoms)
+	for i in range(0,225):
+		oxygen.pop(0)
+	particle.pop(225)
+	atoms.set_calculator(calc)
+	particle.set_calculator(calc)
+	oxygen.set_calculator(calc)
+	whole.set_calculator(calc)
+	energy = (whole.get_potential_energy() - particle.get_potential_energy() - oxygen.get_potential_energy()) * -1.0
+	return energy
+	
+def fitnessCalc(molecules):
+    fitnessPercentages = []
+    fitnessValues = getFitnessValues(molecules)
+    fitnessPercentages[fitnessValues.index(max(fitnessValues))] = 1
+    for cntr in len(fitnessValues):
+        fitnessPercentages[cntr] = fitnessValues.get(cntr)/max(fitnessValues)
+
+
+def getFitnessValues(molecules):
+    fitnessValues = []
+    for cntr in len(molecules):
+        molecularMass = sum(molecules[cntr].get_masses())
+        costPerGram = 1.0 * totalCost(fitnessInfo.get(cntr))/molecularMass
+        scalarCost = 1.25 * ((math.log(costPerGram, 10) + 2.65) / (4.3))
+        scalarCoreEnergy = 1.0 * coreBinding(molecules.get(cntr)) / 2
+        scalarOxygenEnergy = 1.0 * oxygenBinding(molecules.get(cntr)) / 2
+        fitnessValues.append(scalarCoreEnergy + scalarOxygenEnergy + scalarCost)
+    return fitnessValues
+

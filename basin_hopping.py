@@ -93,9 +93,7 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
 
   smallKicks(bigKickResults,0,creationString2)
   
-  print "Note that we have gotten this far"
-  
-  veryBestAtom = returnFinalBestAtom(str(creationString2))
+  veryBestAtom = returnFinalBestAtom(str(creationString2), str(creationString))
   
   return veryBestAtom
 
@@ -105,7 +103,6 @@ def smallKicks(moleculeList, inTreeLevel, creationString):
   global finalList
 
   if inTreeLevel == treeDepth:
-    print " #YOLODUBSTEP  #WUBWUBWUB "
     return None
 
   else:
