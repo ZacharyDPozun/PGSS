@@ -124,3 +124,14 @@ def totalCost(molecule):
   #finally find the cost per gram for the entire molecule
   cost = (Al*x + Ag*y + Au*z + Cu*w + Ni*r + Pd*n + Pt*m)
   return cost
+
+def coreshellCohesive(atoms):
+	from copy import deepcopy
+	shell = deepcopy(atoms)
+	core = deepcopy(atoms)
+	for i in range(140,225):
+		shell.pop(140)
+	for i in range(140):
+		core.pop(0)
+	energy = (atoms.get_potential_energy() - shell.get_potential_energy() - core.get_potential_energy()) * -1.0 / 225.
+	return energy
