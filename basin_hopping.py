@@ -28,9 +28,9 @@ from mpl_toolkits.mplot3d import Axes3D
 from InputVariables import *
 
 #some global variables for convenience:
-listLength = 6
-treeDepth = 2
-FIREMoves = 3
+listLength = 50
+treeDepth = 3
+FIREMoves = 100
 
 
 ######################################################
