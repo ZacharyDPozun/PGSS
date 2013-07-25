@@ -12,7 +12,6 @@ import operator
 from matplotlib import pyplot
 import pylab
 from mpl_toolkits.mplot3d import Axes3D
-from InputVariables import *
 
 def returnFinalBestAtom(trajectoryFile,imageFile):
   candidates = PickleTrajectory(str(trajectoryFile),mode='r')
