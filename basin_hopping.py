@@ -71,8 +71,8 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
   for x in range(listLength/2):
     bigKickResults[x] = shake(bigKickResults[x])
 
-  for x in range(listLength/2, listLength):
-    bigKickResults[x] = switchAtoms(bigKickResults[x])
+  #for x in range(listLength/2, listLength):
+    #bigKickResults[x] = switchAtoms(bigKickResults[x])
 
   for x in range(len(bigKickResults)):
     bigKickResults[x] = optimizeMolecule(bigKickResults[x],FIREMoves,creationString2)
