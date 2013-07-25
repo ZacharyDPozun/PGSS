@@ -298,7 +298,7 @@ def preventExplosions(atoms):
                 for j in range(len(atoms)):
                         distance = numpy.sqrt(numpy.dot((positions[j] - positions[i]),(positions[j] - positions[i])))
                         if ((distance < 1.5) and (i != j)):
-                                print i, j, distance
+                                #print i, j, distance
                                 unitDirection = (positions[j] - positions[i]) / distance
                                 positions[j] += unitDirection
         atoms.set_positions(positions)
