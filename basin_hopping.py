@@ -61,10 +61,8 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
   calc = QSC()
   baseAtom.set_calculator(calc)
 
-  import pdb
-  pdb.set_trace()
+
   baseAtom = makeBimetallic(baseAtom,numberOfType1+numberOfType2,elementN1,elementN2,percentType1)
-  pdb.set_trace()
   baseAtom = preventExplosions(baseAtom)
   baseAtom = preventExplosions(baseAtom)
 
@@ -262,7 +260,9 @@ def smallSwitchAtoms(atoms):
   while (list(posList[firstPosition]) == list(posList[secondPosition])):
     firstPosition = random.randint(0,len(posList))
     secondPosition = random.randint(0,len(posList))
-  posList[firstPosition],posList[secondPosition] = posList[secondPosition],posList[firstPosition]
+  temp = posList[firstPosition]
+  posList[firstPosition] = posList[secondPosition]
+  posList[secondPosition] = temp
   atoms.set_positions(posList)
   return atoms
 
@@ -302,7 +302,6 @@ def preventExplosions(atoms):
                         distance = numpy.sqrt(numpy.dot((positions[j] - positions[i]),(positions[j] - positions[i])))
                         if ((distance < 1.5) and (i != j)):
                                 print i, j, distance
-                                import pdb; pdb.set_trace()
                                 unitDirection = (positions[j] - positions[i]) / distance
                                 positions[j] += unitDirection
         atoms.set_positions(positions)
