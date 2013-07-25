@@ -71,8 +71,8 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
   for x in range(listLength/2):
     bigKickResults[x] = shake(bigKickResults[x])
 
-  #for x in range(listLength/2, listLength):
-    #bigKickResults[x] = switchAtoms(bigKickResults[x])
+  for x in range(listLength/2, listLength):
+    bigKickResults[x] = switchAtoms(bigKickResults[x])
 
   for x in range(len(bigKickResults)):
     bigKickResults[x] = optimizeMolecule(bigKickResults[x],FIREMoves,creationString2)
@@ -247,20 +247,20 @@ def shake(atoms):
         return atoms
 
 def switchAtoms(atoms):
-        numbers = atoms.get_atomic_numbers()
-        random.shuffle(numbers)
-        atoms.set_atomic_numbers(numbers)
+        posList = atoms.get_positions()
+        random.shuffle(posList)
+        atoms.set_positions(posList)
         return atoms
 
 def smallSwitchAtoms(atoms):
-  numbers = atoms.get_atomic_numbers()
-  firstAtom = random.randint(0,len(numbers))
-  secondAtom = random.randint(0,len(numbers))
-  while numbers[firstAtom] == numbers[secondAtom]:
-    firstAtom = random.randint(0,len(numbers))
-    secondAtom = random.randint(0,len(numbers))
-  numbers[firstAtom],numbers[secondAtom] = numbers[secondAtom],numbers[firstAtom]
-  atoms.set_atomic_numbers(numbers)
+  posList = atoms.get_positions()
+  firstPosition = random.randint(0,len(posList))
+  secondPosition = random.randint(0,len(posList))
+  while (posList[firstPosition] == posList[secondPosition]):
+    firstPosition = random.randint(0,len(posList))
+    secondPosition = random.randint(0,len(posList))
+  posList[firstPosition],posList[secondPosition] = posList[secondPosition],posList[firstPosition]
+  atoms.set_positions(posList)
   return atoms
 
 def moveAtoms(numbertomove,atoms):
@@ -326,6 +326,7 @@ def optimizeMolecule(molecule,NMoves,creationString):
         newEnergy = molecule.get_potential_energy()
 
         if (newEnergy < bestEnergy):
+                optimizedMolecule = molecule
                 bestEnergy = newEnergy
                 line = str(totalMinimaFound) + "  " + str(molecule.get_potential_energy()) + "  " + str(i) +"\n"
                 print line
@@ -333,7 +334,7 @@ def optimizeMolecule(molecule,NMoves,creationString):
                 f.write(line)
                 f.close()
                 import pdb; pdb.set_trace()
-                minimaList.write(molecule)
+                minimaList.write(optimizedMolecule)
                 totalMinimaFound += 1
                 sinceLastFind = 0
         elif (sinceLastFind < 200):
@@ -349,7 +350,7 @@ def optimizeMolecule(molecule,NMoves,creationString):
 
   minimaList.close()
 
-  return molecule
+  return optimizedMolecule
 
 def newMove(molecule):
   decision = random.randint(1,6)
@@ -361,8 +362,7 @@ def newMove(molecule):
   elif decision == 3:
     molecule = ball_move(molecule,random.randint(0,nAtoms))
   elif decision == 4:
-    #molecule = smallSwitchAtoms(molecule)
-    pass
+    molecule = smallSwitchAtoms(molecule)
   else:
     molecule = moveAtoms(2,molecule)
 
