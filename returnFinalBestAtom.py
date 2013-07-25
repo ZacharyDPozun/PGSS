@@ -35,7 +35,7 @@ def returnFinalBestAtom(trajectoryFile,imageFile):
   bookFile.write(line)
   bookFile.close()
   
-  imageFileName = str(creationString) + '.png'
+  imageFileName = str(imageFile) + '.png'
   
   ase.io.write(str(imageFileName),bestAtom,format = 'png')
   
