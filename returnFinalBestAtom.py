@@ -14,7 +14,7 @@ import pylab
 from mpl_toolkits.mplot3d import Axes3D
 from InputVariables import *
 
-def returnFinalBestAtom(trajectoryFile):
+def returnFinalBestAtom(trajectoryFile,imageFile):
   candidates = PickleTrajectory(str(trajectoryFile),mode='r')
   molecules = [molecule for molecule in candidates]
   potentialEnergyList = [molecule.get_potential_energy() for molecule in molecules]
@@ -34,6 +34,10 @@ def returnFinalBestAtom(trajectoryFile):
   line = str(trajectoryFile) + " " + str(bestAtom.get_potential_energy()) + " " + str(indexOfMinimumPotentialEnergy) + "\n"
   bookFile.write(line)
   bookFile.close()
+  
+  imageFileName = str(creationString) + '.png'
+  
+  ase.io.write(str(imageFileName),bestAtom,format = 'png')
   
   print "Yes We Can"
   return bestAtom
