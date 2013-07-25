@@ -96,6 +96,7 @@ def totalCost(molecule):
   Ni = 0.01543
   Pd = 24.25085
   Pt = 45.3008
+  #Mt = priceless (too awesome to be counted)
   #counters for the common metals
   alCounter = 0
   agCounter = 0
@@ -104,6 +105,7 @@ def totalCost(molecule):
   niCounter = 0
   pdCounter = 0
   ptCounter = 0
+  #mtCounter = 0
   #get the chemical symbols of our molecule and count them up
   symbolsList = molecule.get_chemical_symbols()
   alCounter = symbolsList.count("Al")
@@ -113,6 +115,7 @@ def totalCost(molecule):
   niCounter = symbolsList.count("Ni")
   pdCounter = symbolsList.count("Pd")
   ptCounter = symbolsList.count("Pt")
+  #mtCounter = symbolsList.count("Mt") meitnerium counter... just in case.
   #find the percentage for each metal
   x = alCounter/totalAtoms
   y = agCounter/totalAtoms
@@ -121,26 +124,18 @@ def totalCost(molecule):
   r = niCounter/totalAtoms
   n = pdCounter/totalAtoms
   m = ptCounter/totalAtoms
+  #g = mtCounter/totalAtoms percent composition of meitnerium
   #finally find the cost per gram for the entire molecule
-  cost = (Al*x + Ag*y + Au*z + Cu*w + Ni*r + Pd*n + Pt*m)
+  cost = (Al*x + Ag*y + Au*z + Cu*w + Ni*r + Pd*n + Pt*m) #+ Mt*g)
   return cost
 
 def coreshellCohesive(atoms):
 	from copy import deepcopy
-	calc = atoms.get_calculator()
-	atoms.set_calculator(None)
-	whole = deepcopy(atoms)
 	shell = deepcopy(atoms)
 	core = deepcopy(atoms)
-	for i in range(140,226):
+	for i in range(140,225):
 		shell.pop(140)
 	for i in range(140):
 		core.pop(0)
-	core.pop(85)
-	whole.pop(225)
-	atoms.set_calculator(calc)
-	core.set_calculator(calc)
-	shell.set_calculator(calc)
-	whole.set_calculator(calc)
-	energy = (whole.get_potential_energy() - shell.get_potential_energy() - core.get_potential_energy()) * -1.0 / 225.
+	energy = (atoms.get_potential_energy() - shell.get_potential_energy() - core.get_potential_energy()) * -1.0 / 225.
 	return energy
