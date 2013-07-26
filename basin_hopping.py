@@ -28,9 +28,9 @@ import pylab
 from mpl_toolkits.mplot3d import Axes3D
 
 #some global variables for convenience:
-listLength = 6
-treeDepth = 2
-FIREMoves = 5
+listLength = 4
+treeDepth = 4
+FIREMoves = 100
 finalList = []
 
 
