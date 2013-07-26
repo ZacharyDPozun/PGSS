@@ -1,5 +1,5 @@
 import ase
-import tsase
+#import tsase
 from qsc import QSC
 from numpy import *
 import numpy
@@ -23,7 +23,7 @@ def create_sample_atom(inNumberOfAtoms,inAtomType):
     positionList.append((atomX,atomY,atomZ))
   sample_atom = Atoms(inAtomType,numpy.asarray(positionList))
   return sample_atom
-  
+
 def nearlySphericalAtom(definingString,inRadius,number):
   """definingString should be something like " 'Pt80' ", for example.
   inRadius should be the radius that you wish to have for the atom.
@@ -49,7 +49,7 @@ def makeBimetallic(molecule, numberAtoms,element1,element2,fractionElement1):
   molecule.set_atomic_numbers(atomicNumberArray)
   molecule.center()
   return molecule
-        
+
 def distanceCenter(atoms):
 	distanceArray = numpy.zeros(len(atoms))
 	cx = atoms.get_center_of_mass()[0]
@@ -63,19 +63,19 @@ def distanceCenter(atoms):
 		distanceArray[i] = distance
 	return distanceArray
 
-def visualize_atom(inAtom):
-  positionList = inAtom.get_positions()
-  xList, yList, zList = [],[],[]
-  for x in range(len(positionList)):
-    xList.append(positionList[x][0])
-    yList.append(positionList[x][1])
-    zList.append(positionList[x][2])
-  #
-  #
-  fig = pylab.figure()
-  ax = Axes3D(fig)
-  ax.scatter(xList,yList,zList)
-  pyplot.show()
+##def visualize_atom(inAtom):
+##  positionList = inAtom.get_positions()
+##  xList, yList, zList = [],[],[]
+##  for x in range(len(positionList)):
+##    xList.append(positionList[x][0])
+##    yList.append(positionList[x][1])
+##    zList.append(positionList[x][2])
+##  #
+##  #
+##  fig = pylab.figure()
+##  ax = Axes3D(fig)
+##  ax.scatter(xList,yList,zList)
+##  pyplot.show()
 
 def plusOrMinus():
     a = random.uniform(0,1)
@@ -83,7 +83,7 @@ def plusOrMinus():
         return 1
     else:
         return -1
-        
+
 def totalCost(molecule):
   """Pass in the molecule and we return the price per gram"""
   totalAtoms = molecule.get_number_of_atoms()
@@ -161,7 +161,7 @@ def oxygenBinding(atoms):
 	whole.set_calculator(calc)
 	energy = (whole.get_potential_energy() - particle.get_potential_energy() - oxygen.get_potential_energy()) * -1.0
 	return energy
-	
+
 def fitnessCalc(molecules):
     fitnessPercentages = []
     fitnessValues = getFitnessValues(molecules)

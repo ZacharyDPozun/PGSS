@@ -13,7 +13,7 @@
 from commonfunctions import nearlySphericalAtom, makeBimetallic, distanceCenter, plusOrMinus
 from returnFinalBestAtom import *
 import ase
-import tsase
+#import tsase
 from qsc import QSC
 import numpy
 from numpy import *
@@ -23,9 +23,8 @@ from ase.io.trajectory import PickleTrajectory
 from ase.md import VelocityVerlet
 from scipy import stats
 import operator
-from matplotlib import pyplot
-import pylab
-from mpl_toolkits.mplot3d import Axes3D
+
+computer = "Over"
 
 #some global variables for convenience:
 listLength = 6
@@ -88,13 +87,13 @@ def mainBasinLoop(symbol1, symbol2, elementN1, elementN2, numberOfType1, numberO
   minimaList = PickleTrajectory(str(creationString2),mode='a')
   minimaList.write(bestAtom)
   minimaList.close()
-  
+
   finalList.append(bestAtom.copy())
 
   smallKicks(bigKickResults,0,creationString2)
-  
+
   veryBestAtom = returnFinalBestAtom(str(creationString2), str(creationString))
-  
+
   return veryBestAtom
 
 
@@ -155,8 +154,8 @@ def smallKicks(moleculeList, inTreeLevel, creationString):
     minimaList.write(p4b)
     minimaList.write(p5b)
     minimaList.close()
-    
-    
+
+
     if p1min < finalList[len(finalList)-1]:
       finalList.append(p1b.copy())
     if p2min < finalList[len(finalList)-1]:
