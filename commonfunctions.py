@@ -89,7 +89,8 @@ def totalCost(molecule):
   totalAtoms = molecule.get_number_of_atoms()
   totalAtoms *= 1.0
   #price per gram of common metals
-  Al = 0.00220462
+  Rh = 76.52
+  Ir = 23.00
   Ag = 0.62308
   Au = 41.25
   Cu = 0.00661
@@ -97,7 +98,8 @@ def totalCost(molecule):
   Pd = 24.25085
   Pt = 45.3008
   #counters for the common metals
-  alCounter = 0
+  rhCounter = 0
+  irCounter = 0
   agCounter = 0
   auCounter = 0
   cuCounter = 0
@@ -106,13 +108,15 @@ def totalCost(molecule):
   ptCounter = 0
   #get the chemical symbols of our molecule and count them up
   symbolsList = molecule.get_chemical_symbols()
-  alCounter = symbolsList.count("Al")
-  agCounter = symbolsList.count("Ag")
-  auCounter = symbolsList.count("Au")
-  cuCounter = symbolsList.count("Cu")
-  niCounter = symbolsList.count("Ni")
-  pdCounter = symbolsList.count("Pd")
-  ptCounter = symbolsList.count("Pt")
+  alCounter = symbolsList.count("Al") * 1.
+  agCounter = symbolsList.count("Ag") * 1.
+  auCounter = symbolsList.count("Au") * 1.
+  cuCounter = symbolsList.count("Cu") * 1.
+  niCounter = symbolsList.count("Ni") * 1.
+  pdCounter = symbolsList.count("Pd") * 1.
+  ptCounter = symbolsList.count("Pt") * 1.
+  rhCounter = symbolsList.count("Rh") * 1.
+  irCounter = symbolsList.count("Ir") * 1.
   #find the percentage for each metal
   x = alCounter/totalAtoms
   y = agCounter/totalAtoms
@@ -121,8 +125,10 @@ def totalCost(molecule):
   r = niCounter/totalAtoms
   n = pdCounter/totalAtoms
   m = ptCounter/totalAtoms
+  j = irCounter/totalAtoms
+  k = rhCounter/totalAtoms
   #finally find the cost per gram for the entire molecule
-  cost = (Al*x + Ag*y + Au*z + Cu*w + Ni*r + Pd*n + Pt*m)
+  cost = (Al*x + Ag*y + Au*z + Cu*w + Ni*r + Pd*n + Pt*m + Ir*j + Rh*k)
   return cost
 
 def coreshellCohesive(atoms):
@@ -132,34 +138,15 @@ def coreshellCohesive(atoms):
 	whole = deepcopy(atoms)
 	shell = deepcopy(atoms)
 	core = deepcopy(atoms)
-	for i in range(140,226):
+	for i in range(140,225):
 		shell.pop(140)
 	for i in range(140):
 		core.pop(0)
-	core.pop(85)
-	whole.pop(225)
 	atoms.set_calculator(calc)
 	core.set_calculator(calc)
 	shell.set_calculator(calc)
 	whole.set_calculator(calc)
 	energy = (whole.get_potential_energy() - shell.get_potential_energy() - core.get_potential_energy()) * -1.0 / 225.
-	return energy
-
-def oxygenBinding(atoms):
-	from copy import deepcopy
-	calc = atoms.get_calculator()
-	atoms.set_calculator(None)
-	whole = deepcopy(atoms)
-	particle = deepcopy(atoms)
-	oxygen = deepcopy(atoms)
-	for i in range(0,225):
-		oxygen.pop(0)
-	particle.pop(225)
-	atoms.set_calculator(calc)
-	particle.set_calculator(calc)
-	oxygen.set_calculator(calc)
-	whole.set_calculator(calc)
-	energy = (whole.get_potential_energy() - particle.get_potential_energy() - oxygen.get_potential_energy()) * -1.0
 	return energy
 
 def fitnessCalc(molecules):
