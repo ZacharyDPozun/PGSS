@@ -335,7 +335,6 @@ def optimizeMolecule(molecule,NMoves,creationString):
 
   calc = QSC()
   molecule.set_calculator(calc)
-  minimaList = PickleTrajectory(str(creationString),mode='a')
 
   for i in range(NMoves):
         molecule = newMove(molecule)
@@ -355,8 +354,10 @@ def optimizeMolecule(molecule,NMoves,creationString):
                 f = open('EnergyList.txt','a')
                 f.write(line)
                 f.close()
+                minimaList = PickleTrajectory(str(creationString),mode='a')
                 minimaList.write(optimizedMolecule)
                 totalMinimaFound += 1
+                minimaList.close()
                 sinceLastFind = 0
         elif (sinceLastFind < 200):
           break
