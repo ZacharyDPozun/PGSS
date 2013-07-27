@@ -108,7 +108,6 @@ def totalCost(molecule):
   ptCounter = 0
   #get the chemical symbols of our molecule and count them up
   symbolsList = molecule.get_chemical_symbols()
-  alCounter = symbolsList.count("Al") * 1.
   agCounter = symbolsList.count("Ag") * 1.
   auCounter = symbolsList.count("Au") * 1.
   cuCounter = symbolsList.count("Cu") * 1.
@@ -118,7 +117,6 @@ def totalCost(molecule):
   rhCounter = symbolsList.count("Rh") * 1.
   irCounter = symbolsList.count("Ir") * 1.
   #find the percentage for each metal
-  x = alCounter/totalAtoms
   y = agCounter/totalAtoms
   z = auCounter/totalAtoms
   w = cuCounter/totalAtoms
@@ -128,7 +126,7 @@ def totalCost(molecule):
   j = irCounter/totalAtoms
   k = rhCounter/totalAtoms
   #finally find the cost per gram for the entire molecule
-  cost = (Al*x + Ag*y + Au*z + Cu*w + Ni*r + Pd*n + Pt*m + Ir*j + Rh*k)
+  cost = (Ag*y + Au*z + Cu*w + Ni*r + Pd*n + Pt*m + Ir*j + Rh*k)
   return cost
 
 def coreshellCohesive(atoms):
