@@ -15,12 +15,10 @@ from copy import deepcopy
 
 
 
-### Set up non-adjustable variables
-PtCoreShell = 0.8437282614455868
-
 ### Set up functions
 
 def createparticle(type1, type2, numbertype1):
+	calc = QSC()
 	atoms = ase.io.read('POSCAR_genetic',format='vasp')	
 	shell = deepcopy(atoms)
 	core = deepcopy(atoms)
@@ -35,9 +33,16 @@ def createparticle(type1, type2, numbertype1):
 		dummyarray[i] = type2
 	random.shuffle(dummyarray)
 	core.set_chemical_symbols(dummyarray)
-	for i in range(len(core)):
-		shell.append(core.pop(0))
-	return shell
+	for i in range(len(shell)):
+		core.append(shell.pop(0))
+	core.set_calculator(calc)
+	opt = FIRE(core)
+	opt.run(steps=10000)
+	return core
 
-atoms= createparticle('Ag','Rh',50)
+atoms= createparticle('Pt','Pt',3)
 
+Ptcohesive=coreshellCohesive(atoms)
+Ptcost=totalCost(atoms)
+
+print Ptcohesive,Ptcost
