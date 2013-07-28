@@ -136,10 +136,10 @@ def coreshellCohesive(atoms):
 	whole = deepcopy(atoms)
 	shell = deepcopy(atoms)
 	core = deepcopy(atoms)
-	for i in range(140,225):
-		shell.pop(140)
-	for i in range(140):
-		core.pop(0)
+	for i in range(85,225):
+		core.pop(85)
+	for i in range(85):
+		shell.pop(0)
 	atoms.set_calculator(calc)
 	core.set_calculator(calc)
 	shell.set_calculator(calc)
