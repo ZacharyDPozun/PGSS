@@ -100,7 +100,7 @@ def makeGraphs(makePictures=False):
   ax.set_ylabel('Component Element')
   ax.set_zlabel('PE per Atom')
   if makePictures:
-    pylab.savefig('fig50.pdf')
+    pylab.savefig('fig50.png')
   pyplot.title("50% Platinum", fontsize=12)
   pyplot.show()
 
