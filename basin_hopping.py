@@ -24,7 +24,7 @@ from ase.md import VelocityVerlet
 from scipy import stats
 import operator
 
-computer = "Over"
+computer = "Over!"
 
 #some global variables for convenience:
 listLength = 4
