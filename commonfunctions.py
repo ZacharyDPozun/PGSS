@@ -8,7 +8,6 @@ from ase.optimize import FIRE
 from ase.io.trajectory import PickleTrajectory
 from ase.md import VelocityVerlet
 
-
 def create_sample_atom(inNumberOfAtoms,inAtomType):
   """Creates a mostly spherical atom with inNumberOfAtoms atoms
   and all of element inAtomType.  inAtomType MUST BE A STRING.
