@@ -8,7 +8,7 @@ from ase.optimize import FIRE
 from ase.io.trajectory import PickleTrajectory
 from ase.md import VelocityVerlet
 
-change2 = "another change"
+change3 = "made from github.com"
 
 def create_sample_atom(inNumberOfAtoms,inAtomType):
   """Creates a mostly spherical atom with inNumberOfAtoms atoms
