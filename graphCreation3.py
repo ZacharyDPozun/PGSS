@@ -19,7 +19,7 @@ def makeGraphs(makePictures=False):
     group = line.split()
     lines.append(group)
 
-  ptPercent25 = [element for element in lines if element[2]=='50']
+  ptPercent25 = [element for element in lines if element[2]=='75']
 
   Pt25Ag75 = [element for element in ptPercent25 if element[1]=='Ag']
   Pt25Au75 = [element for element in ptPercent25 if element[1]=='Au']
@@ -28,6 +28,9 @@ def makeGraphs(makePictures=False):
   Pt25Ni75 = [element for element in ptPercent25 if element[1]=='Ni']
   Pt25Pd75 = [element for element in ptPercent25 if element[1]=='Pd']
   Pt25Rh75 = [element for element in ptPercent25 if element[1]=='Rh']
+
+  for element in Pt25Ir75:
+    print element
 
   Pt25Ag75.sort(key=lambda x: int(x[3]))
   Pt25Au75.sort(key=lambda x: int(x[3]))
@@ -100,7 +103,7 @@ def makeGraphs(makePictures=False):
   ax.set_ylabel('Component Element')
   ax.set_zlabel('PE per Atom')
   if makePictures:
-    pylab.savefig('fig75.pdf')
+    pylab.savefig('fig75.png')
   pyplot.title("75% Platinum", fontsize=12)
   pyplot.show()
 
