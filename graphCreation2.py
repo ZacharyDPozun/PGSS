@@ -19,7 +19,7 @@ def makeGraphs(makePictures=False):
     group = line.split()
     lines.append(group)
 
-  ptPercent25 = [element for element in lines if element[2]=='25']
+  ptPercent25 = [element for element in lines if element[2]=='50']
 
   Pt25Ag75 = [element for element in ptPercent25 if element[1]=='Ag']
   Pt25Au75 = [element for element in ptPercent25 if element[1]=='Au']
@@ -100,8 +100,8 @@ def makeGraphs(makePictures=False):
   ax.set_ylabel('Component Element')
   ax.set_zlabel('PE per Atom')
   if makePictures:
-    pylab.savefig('fig25.pdf')
-  pyplot.title("25% Platinum", fontsize=12)
+    pylab.savefig('fig50.pdf')
+  pyplot.title("50% Platinum", fontsize=12)
   pyplot.show()
 
 makeGraphs(True)
