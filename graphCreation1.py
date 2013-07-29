@@ -9,85 +9,87 @@ from matplotlib import pyplot
 import pylab
 from mpl_toolkits.mplot3d import Axes3D
 
-baseFile = open('bestEnergiesPerAlloy.txt', mode = 'r')
-lines = []
+def makeGraphs():
 
-for line in baseFile:
-  group = line.split()
-  lines.append(group)
+  baseFile = open('bestEnergiesPerAlloy.txt', mode = 'r')
+  lines = []
 
-ptPercent25 = [element for element in lines if element[2]=='25']
+  for line in baseFile:
+    group = line.split()
+    lines.append(group)
 
-Pt25Ag75 = [element for element in ptPercent25 if element[1]=='Ag']
-Pt25Au75 = [element for element in ptPercent25 if element[1]=='Au']
-Pt25Cu75 = [element for element in ptPercent25 if element[1]=='Cu']
-Pt25Ir75 = [element for element in ptPercent25 if element[1]=='Ir']
-Pt25Ni75 = [element for element in ptPercent25 if element[1]=='Ni']
-Pt25Pd75 = [element for element in ptPercent25 if element[1]=='Pd']
-Pt25Rh75 = [element for element in ptPercent25 if element[1]=='Rh']
+  ptPercent25 = [element for element in lines if element[2]=='25']
 
-Pt25Ag75.sort(key=lambda x: int(x[3]))
-Pt25Au75.sort(key=lambda x: int(x[3]))
-Pt25Cu75.sort(key=lambda x: int(x[3]))
-Pt25Ir75.sort(key=lambda x: int(x[3]))
-Pt25Ni75.sort(key=lambda x: int(x[3]))
-Pt25Pd75.sort(key=lambda x: int(x[3]))
-Pt25Rh75.sort(key=lambda x: int(x[3]))
+  Pt25Ag75 = [element for element in ptPercent25 if element[1]=='Ag']
+  Pt25Au75 = [element for element in ptPercent25 if element[1]=='Au']
+  Pt25Cu75 = [element for element in ptPercent25 if element[1]=='Cu']
+  Pt25Ir75 = [element for element in ptPercent25 if element[1]=='Ir']
+  Pt25Ni75 = [element for element in ptPercent25 if element[1]=='Ni']
+  Pt25Pd75 = [element for element in ptPercent25 if element[1]=='Pd']
+  Pt25Rh75 = [element for element in ptPercent25 if element[1]=='Rh']
 
-Ag75xyz, Au75xyz, Cu75xyz, Ir75xyz, Ni75xyz, Pd75xyz, Rh75xyz = [],[],[],[],[],[],[]
+  Pt25Ag75.sort(key=lambda x: int(x[3]))
+  Pt25Au75.sort(key=lambda x: int(x[3]))
+  Pt25Cu75.sort(key=lambda x: int(x[3]))
+  Pt25Ir75.sort(key=lambda x: int(x[3]))
+  Pt25Ni75.sort(key=lambda x: int(x[3]))
+  Pt25Pd75.sort(key=lambda x: int(x[3]))
+  Pt25Rh75.sort(key=lambda x: int(x[3]))
 
-for element in range(len(Pt25Ag75)):
-  Ag75xyz.append([int(Pt25Ag75[element][3]),Pt25Ag75[element][1],float(Pt25Ag75[element][4])])
-  Au75xyz.append([int(Pt25Au75[element][3]),Pt25Au75[element][1],float(Pt25Au75[element][4])])
-  Cu75xyz.append([int(Pt25Cu75[element][3]),Pt25Cu75[element][1],float(Pt25Cu75[element][4])])
-  Ir75xyz.append([int(Pt25Ir75[element][3]),Pt25Ir75[element][1],float(Pt25Ir75[element][4])])
-  Ni75xyz.append([int(Pt25Ni75[element][3]),Pt25Ni75[element][1],float(Pt25Ni75[element][4])])
-  Pd75xyz.append([int(Pt25Pd75[element][3]),Pt25Pd75[element][1],float(Pt25Pd75[element][4])])
-  Rh75xyz.append([int(Pt25Rh75[element][3]),Pt25Rh75[element][1],float(Pt25Rh75[element][4])])
+  Ag75xyz, Au75xyz, Cu75xyz, Ir75xyz, Ni75xyz, Pd75xyz, Rh75xyz = [],[],[],[],[],[],[]
 
-for element in range(len(Ag75xyz)):
-  Ag75xyz[element][1] = 0
-  Au75xyz[element][1] = 1
-  Cu75xyz[element][1] = 2
-  Ir75xyz[element][1] = 3
-  Ni75xyz[element][1] = 4
-  Pd75xyz[element][1] = 5
-  Rh75xyz[element][1] = 6
+  for element in range(len(Pt25Ag75)):
+    Ag75xyz.append([int(Pt25Ag75[element][3]),Pt25Ag75[element][1],float(Pt25Ag75[element][4])])
+    Au75xyz.append([int(Pt25Au75[element][3]),Pt25Au75[element][1],float(Pt25Au75[element][4])])
+    Cu75xyz.append([int(Pt25Cu75[element][3]),Pt25Cu75[element][1],float(Pt25Cu75[element][4])])
+    Ir75xyz.append([int(Pt25Ir75[element][3]),Pt25Ir75[element][1],float(Pt25Ir75[element][4])])
+    Ni75xyz.append([int(Pt25Ni75[element][3]),Pt25Ni75[element][1],float(Pt25Ni75[element][4])])
+    Pd75xyz.append([int(Pt25Pd75[element][3]),Pt25Pd75[element][1],float(Pt25Pd75[element][4])])
+    Rh75xyz.append([int(Pt25Rh75[element][3]),Pt25Rh75[element][1],float(Pt25Rh75[element][4])])
 
-x1,x2,x3,x4,x5,x6,x7 = [],[],[],[],[],[],[]
-y1,y2,y3,y4,y5,y6,y7 = [],[],[],[],[],[],[]
-z1,z2,z3,z4,z5,z6,z7 = [],[],[],[],[],[],[]
+  for element in range(len(Ag75xyz)):
+    Ag75xyz[element][1] = 0
+    Au75xyz[element][1] = 1
+    Cu75xyz[element][1] = 2
+    Ir75xyz[element][1] = 3
+    Ni75xyz[element][1] = 4
+    Pd75xyz[element][1] = 5
+    Rh75xyz[element][1] = 6
 
-for element in range(len(Ag75xyz)):
-  x1.append(Ag75xyz[element][0])
-  y1.append(Ag75xyz[element][1])
-  z1.append(Ag75xyz[element][2])
-  x2.append(Au75xyz[element][0])
-  y2.append(Au75xyz[element][1])
-  z2.append(Au75xyz[element][2])
-  x3.append(Cu75xyz[element][0])
-  y3.append(Cu75xyz[element][1])
-  z3.append(Cu75xyz[element][2])
-  x4.append(Ir75xyz[element][0])
-  y4.append(Ir75xyz[element][1])
-  z4.append(Ir75xyz[element][2])
-  x5.append(Ni75xyz[element][0])
-  y5.append(Ni75xyz[element][1])
-  z5.append(Ni75xyz[element][2])
-  x6.append(Pd75xyz[element][0])
-  y6.append(Pd75xyz[element][1])
-  z6.append(Pd75xyz[element][2])
-  x7.append(Rh75xyz[element][0])
-  y7.append(Rh75xyz[element][1])
-  z7.append(Rh75xyz[element][2])
+  x1,x2,x3,x4,x5,x6,x7 = [],[],[],[],[],[],[]
+  y1,y2,y3,y4,y5,y6,y7 = [],[],[],[],[],[],[]
+  z1,z2,z3,z4,z5,z6,z7 = [],[],[],[],[],[],[]
 
-fig = pylab.figure()
-ax = Axes3D(fig)
-ax.plot(x1,y1,z1)
-ax.plot(x2,y2,z2)
-ax.plot(x3,y3,z3)
-ax.plot(x4,y4,z4)
-ax.plot(x5,y5,z5)
-ax.plot(x6,y6,z6)
-ax.plot(x7,y7,z7)
-pyplot.show()
+  for element in range(len(Ag75xyz)):
+    x1.append(Ag75xyz[element][0])
+    y1.append(Ag75xyz[element][1])
+    z1.append(Ag75xyz[element][2])
+    x2.append(Au75xyz[element][0])
+    y2.append(Au75xyz[element][1])
+    z2.append(Au75xyz[element][2])
+    x3.append(Cu75xyz[element][0])
+    y3.append(Cu75xyz[element][1])
+    z3.append(Cu75xyz[element][2])
+    x4.append(Ir75xyz[element][0])
+    y4.append(Ir75xyz[element][1])
+    z4.append(Ir75xyz[element][2])
+    x5.append(Ni75xyz[element][0])
+    y5.append(Ni75xyz[element][1])
+    z5.append(Ni75xyz[element][2])
+    x6.append(Pd75xyz[element][0])
+    y6.append(Pd75xyz[element][1])
+    z6.append(Pd75xyz[element][2])
+    x7.append(Rh75xyz[element][0])
+    y7.append(Rh75xyz[element][1])
+    z7.append(Rh75xyz[element][2])
+
+  fig = pylab.figure()
+  ax = Axes3D(fig)
+  ax.plot(x1,y1,z1)
+  ax.plot(x2,y2,z2)
+  ax.plot(x3,y3,z3)
+  ax.plot(x4,y4,z4)
+  ax.plot(x5,y5,z5)
+  ax.plot(x6,y6,z6)
+  ax.plot(x7,y7,z7)
+  pyplot.show()
