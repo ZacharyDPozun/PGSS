@@ -93,7 +93,7 @@ def makeGraphs(makePictures=False):
   plt.plot(x5,z5,label="Nickel")
   plt.plot(x6,z6,label="Palladium")
   plt.plot(x7,z7,label="Rhodium")
-  ply.xlabel('# of Atoms')
+  plt.xlabel('# of Atoms')
   plt.ylabel('PE per Atom')
   plt.legend()
   plt.show()
