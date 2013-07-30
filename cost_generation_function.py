@@ -42,8 +42,8 @@ def stupidCostFunction(intakeList):
   return -1*price/potentialPerAtom
 
 
-fullFile = open('bestEnergiesPerAlloy.txt', mode = 'r')
-newFile = open('BHBestEnergiesWithPAPECost.txt', mode = 'a')
+fullFile = open('bestEnergiesPerAlloyAnnealing.txt', mode = 'r')
+newFile = open('SABestEnergiesWithPAPECost.txt', mode = 'a')
 
 for line in fullFile:
   newList = line.split()
