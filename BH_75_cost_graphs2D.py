@@ -94,7 +94,7 @@ def makeGraphs(makePictures=False):
   plt.plot(x6,z6,label="Palladium")
   plt.plot(x7,z7,label="Rhodium")
   plt.xlabel('# of Atoms')
-  plt.ylabel('PE per Atom')
+  plt.ylabel('Cost/(PE per Atom)')
   #plt.legend()
   plt.show()
   plt.autoscale_view()
