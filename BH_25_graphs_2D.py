@@ -85,7 +85,7 @@ def makeGraphs(makePictures=False):
     y7.append(Rh75xyz[element][1])
     z7.append(Rh75xyz[element][2])
 
-  plt.title("BH_25")
+  plt.title("Basin Hopping: 25% Platinum")
   plt.plot(x1,z1,label="Silver")
   plt.plot(x2,z2,label="Gold")
   plt.plot(x3,z3,label="Copper")
