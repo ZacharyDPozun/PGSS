@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 
 def makeGraphs(makePictures=False):
 
-  baseFile = open('BHBestEnergiesWithPAPECost.txt', mode = 'r')
+  baseFile = open('SABestEnergiesWithPAPECost.txt', mode = 'r')
   lines = []
 
   for line in baseFile:
