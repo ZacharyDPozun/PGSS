@@ -98,7 +98,7 @@ def makeGraphs(makePictures=False):
   plt.legend()
   plt.show()
   plt.autoscale_view()
-  plt.legend(prop={'size':9})
+  plt.legend(prop={'size':9} loc = 1)
 
 
 makeGraphs(True)
