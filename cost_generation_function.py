@@ -7,11 +7,11 @@ def stupidCostFunction(intakeList):
   in the code below
   [Pt, element2, percentPt, #Atoms, PE]"""
   element1 = "Pt"
-  element2 = str(intakeList[1])
-  percentPt = int(intakeList[2])
-  nAtoms = int(intakeList[3])
+  element2 = str(intakeList[2])
+  percentPt = int(intakeList[3])
+  nAtoms = int(intakeList[4])
   percent2 = 100 - percentPt
-  potentialPerAtom = float(intakeList[4])
+  potentialPerAtom = float(intakeList[5])
 
   #element prices per gram
   Rh = 76.52
