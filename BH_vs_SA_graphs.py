@@ -124,4 +124,4 @@ def basinVsAnnealGraphs(inElement="Au",make3DGraph=False):
     plt.legend()
     plt.show()
 
-basinVsAnnealGraphs("Pd")
+basinVsAnnealGraphs("Au")

@@ -100,11 +100,8 @@ def makeGraphs(makePictures=False):
   ax.set_ylabel('Component Element')
   ax.set_zlabel('PE per Atom')
   if makePictures:
-<<<<<<< HEAD:BH_25_graphs.py
     pylab.savefig('fig25.png')
-=======
     pylab.savefig('fig25.pdf')
->>>>>>> 2b13312ae98c2974aa456a6d8c64b3ca66b5c2af:graphCreation1.py
   pyplot.title("25% Platinum", fontsize=12)
   pyplot.show()
 
