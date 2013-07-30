@@ -84,7 +84,7 @@ def makeGraphs(makePictures=False):
     y7.append(Rh75xyz[element][1])
     z7.append(Rh75xyz[element][2])
 
-  fig = pylab.figure()
+  fig = pylab.figure(num=None,figsize=(10,8),dpi=72)
   ax = Axes3D(fig)
   ax.legend()
   ax.plot(x1,y1,z1,label="Silver")
@@ -101,7 +101,7 @@ def makeGraphs(makePictures=False):
   ax.set_zlabel('Cost / PE*Atom')
   if makePictures:
     pylab.savefig('fig50.png')
-  pyplot.title("50% Platinum", fontsize=12)
+  pyplot.title("25% Platinum", fontsize=12)
   pyplot.show()
 
 makeGraphs(False)

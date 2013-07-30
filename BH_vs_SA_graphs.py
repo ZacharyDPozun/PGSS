@@ -70,7 +70,7 @@ def basinVsAnnealGraphs(inElement="Au",make3DGraph=False):
     z3SA.append(float(Pd50SA[k][4]))
 
   if make3DGraph:
-    fig = pylab.figure()
+    fig = pylab.figure(num=None,figsize=(10,8),dpi=72)
     ax = Axes3D(fig)
     if inElement == "Au":
       ax.plot(x1BH,y1BH,z1BH,label="BH")

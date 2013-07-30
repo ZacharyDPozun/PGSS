@@ -84,7 +84,7 @@ def makeGraphs(makePictures=False):
 ##    y7.append(Rh75xyz[element][1])
 ##    z7.append(Rh75xyz[element][2])
 
-  fig = pylab.figure()
+  fig = pylab.figure(num=None,figsize=(10,8),dpi=72)
   ax = Axes3D(fig)
   ax.legend()
   ax.plot(x1,y1,z1,label="Gold")
