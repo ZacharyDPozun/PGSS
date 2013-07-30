@@ -94,6 +94,7 @@ def makeGraphs(makePictures=False):
   ax.plot(x5,y5,z5,label="Nickel")
   ax.plot(x6,y6,z6,label="Palladium")
   ax.plot(x7,y7,z7,label="Rhodium")
+  ax.autoscale_view()
   ax.legend(prop={'size':9})
   pylab.yticks([0,1,2,3,4,5,6],["Ag","Au","Cu","Ir","Ni","Pd","Rh"])
   ax.set_xlabel('# of Atoms')
