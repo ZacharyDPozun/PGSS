@@ -8,7 +8,8 @@
 from matplotlib import pyplot
 import pylab
 from mpl_toolkits.mplot3d import Axes3D
-import numpy
+import numpy as np
+import matplotlib.pyplot as plt
 
 def makeGraphs(makePictures=False):
 
@@ -84,26 +85,14 @@ def makeGraphs(makePictures=False):
 ##    y7.append(Rh75xyz[element][1])
 ##    z7.append(Rh75xyz[element][2])
 
-  fig = pylab.figure(num=None,figsize=(10,8),dpi=72)
-  ax = Axes3D(fig)
-  ax.legend()
-  ax.plot(x1,y1,z1,label="Gold")
-  ax.plot(x2,y2,z2,label="Nickel")
-  ax.plot(x3,y3,z3,label="Palladium")
-##  ax.plot(x4,y4,z4,label="Iridium")
-##  ax.plot(x5,y5,z5,label="Nickel")
-##  ax.plot(x6,y6,z6,label="Palladium")
-##  ax.plot(x7,y7,z7,label="Rhodium")
-  ax.legend(prop={'size':9})
-  pylab.yticks([0,1,2],["Au","Ni","Pd"])
-  ax.set_xlabel('# of Atoms')
-  ax.set_ylabel('Component Element')
-  ax.set_zlabel('PE per Atom')
-  if makePictures:
-    pylab.savefig('fig50.png')
-  pyplot.title("50% Platinum", fontsize=12)
-  pyplot.show()
+  plt.title("Simulated Annealing with Cost: 50% Platinum")
+  plt.plot(x1,z1,label="Gold")
+  plt.plot(x2,z2,label="Nickel")
+  plt.plot(x3,z3,label="Palladium")
+  plt.xlabel('# of Atoms')
+  plt.ylabel('Cost/(PE per Atom)')
+  #plt.legend()
+  plt.show()
+  plt.autoscale_view()
 
-
-
-makeGraphs(True)
+makeGraphs(False)
