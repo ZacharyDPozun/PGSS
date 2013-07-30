@@ -6,7 +6,6 @@
 #################################################################
 
 from matplotlib import pyplot
-from matplotlib.font_manager import FontProperties
 import pylab
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
@@ -97,9 +96,6 @@ def makeGraphs(makePictures=False):
   plt.xlabel('# of Atoms')
   plt.ylabel('PE per Atom')
   #plt.legend()
-  fontP = FontProperties()
-  fontP.set_size('small')
-  legend([plot1], "title", prop = fontP)
   plt.show()
   plt.autoscale_view()
   #plt.legend(prop={'size':9} loc = 1)
