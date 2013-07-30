@@ -104,4 +104,6 @@ def makeGraphs(makePictures=False):
   pyplot.title("50% Platinum", fontsize=12)
   pyplot.show()
 
+
+
 makeGraphs(True)
