@@ -93,14 +93,12 @@ def makeGraphs(makePictures=False):
   plt.plot(x5,z5,label="Nickel")
   plt.plot(x6,z6,label="Palladium")
   plt.plot(x7,z7,label="Rhodium")
+  ply.set_xlabel('# of Atoms')
+  plt.set_ylabel('PE per Atom')
   plt.legend()
   plt.show()
   plt.autoscale_view()
   plt.legend(prop={'size':9})
-  if makePictures:
-    pylab.savefig('fig25.png')
-    pylab.savefig('fig25.pdf')
-  pyplot.title("25% Platinum", fontsize=12)
-  pyplot.show()
+
 
 makeGraphs(True)
