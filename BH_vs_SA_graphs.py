@@ -115,13 +115,13 @@ def basinVsAnnealGraphs(inElement="Au",make3DGraph=False):
       plt.plot(x1SAa,y1SAa,label = "Anneal")
     if inElement=="Ni":
       plt.title("Nickel alloys")
-      plt.plot(x1BHa,y1BHa,label = "Basin")
-      plt.plot(x1SAa,y1SAa,label = "Anneal")
+      plt.plot(x2BHa,y2BHa,label = "Basin")
+      plt.plot(x2SAa,y2SAa,label = "Anneal")
     if inElement=="Pd":
       plt.title("Palladium alloys")
-      plt.plot(x1BHa,y1BHa,label = "Basin")
-      plt.plot(x1SAa,y1SAa,label = "Anneal")
+      plt.plot(x3BHa,y3BHa,label = "Basin")
+      plt.plot(x3SAa,y3SAa,label = "Anneal")
     plt.legend()
     plt.show()
 
-basinVsAnnealGraphs("Au")
+basinVsAnnealGraphs("Pd")
