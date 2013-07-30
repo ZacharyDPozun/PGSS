@@ -85,7 +85,7 @@ def makeGraphs(makePictures=False):
 ##    y7.append(Rh75xyz[element][1])
 ##    z7.append(Rh75xyz[element][2])
 
-  plt.title("Simulated Annealing: 25% Platinum")
+  plt.title("Simulated Annealing: 50% Platinum")
   plt.plot(x1,z1,label="Gold")
   plt.plot(x2,z2,label="Nickel")
   plt.plot(x3,z3,label="Palladium")
