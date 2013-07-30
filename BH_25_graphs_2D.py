@@ -8,7 +8,8 @@
 from matplotlib import pyplot
 import pylab
 from mpl_toolkits.mplot3d import Axes3D
-import numpy
+import numpy as np
+import matplotlib.pyplot as plt
 
 def makeGraphs(makePictures=False):
 
