@@ -12,7 +12,7 @@ import numpy
 import matplotlib.pyplot as plt
 
 def makeSimpleGraph():
-  baseFile = open('betterFilev3.txt',mode = 'r')
+  baseFile = open('betterFile3.txt',mode = 'r')
   lines = []
 
   for line in baseFile:
@@ -22,10 +22,10 @@ def makeSimpleGraph():
 
   lines = [line for line in lines if len(line)==8]
 
-  xValues = [float(element[4]) for element in lines if element[6]=='20']
-  yValues = [float(element[3]) for element in lines if element[6]=='20']
-  xValues2 = [float(element[4]) for element in lines if element[6]!='20']
-  yValues2 = [float(element[3]) for element in lines if element[6]!='20']
+  xValues = [abs(float(element[4])-0.562537) for element in lines if element[6]=='20']
+  yValues = [abs(float(element[3])-28.18966) for element in lines if element[6]=='20']
+  xValues2 = [abs(float(element[4])-0.562537) for element in lines if element[6]!='20']
+  yValues2 = [abs(float(element[3])-28.18966) for element in lines if element[6]!='20']
 
 
   print xValues[0],yValues[0]

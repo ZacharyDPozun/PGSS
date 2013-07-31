@@ -5,16 +5,17 @@
 # ALPHA (X) vs %COMPOSITION OF ELEMENT
 # FOUR PLOTS:  PT, AG, NI, CU
 
-LENGTH = 93
+LENGTH = 101
 
 from matplotlib import pyplot
 import pylab
 from mpl_toolkits.mplot3d import Axes3D
-import numpy
 import matplotlib.pyplot as plt
+import numpy as np
+from scipy.interpolate import spline
 
 def makeSimpleGraph():
-  baseFile = open('betterFilev3.txt',mode = 'r')
+  baseFile = open('betterFile3.txt',mode = 'r')
   lines = []
 
   for line in baseFile:
@@ -43,12 +44,26 @@ def makeSimpleGraph():
 
   xRange = range(LENGTH)
 
-  plt.title("Some stuff")
-  plt.plot(xRange,platY,color='b',label = "Pt")
-  plt.plot(xRange,silverY,color='r',label= "Ag")
-  plt.plot(xRange,nickelY,color='g',label="Ni")
-  plt.plot(xRange,copperY,color='y',label="Cu")
-  plt.legend()
+  xNew = np.linspace(min(xRange),max(xRange),20)
+  power_smooth1 = spline(xRange,platY,xNew)
+  power_smooth2 = spline(xRange,silverY,xNew)
+  power_smooth3 = spline(xRange,nickelY,xNew)
+  power_smooth4 = spline(xRange,copperY,xNew)
+
+
+  plt.title("% Composition per Alpha Value")
+
+  #plt.plot(xRange,platY,color='b',label = "Pt")
+  #plt.plot(xRange,silverY,color='r',label= "Ag")
+  #plt.plot(xRange,nickelY,color='g',label="Ni")
+  #plt.plot(xRange,copperY,color='y',label="Cu")
+  plt.plot(xNew,power_smooth1,color='b',label="Pt")
+  plt.plot(xNew,power_smooth2,color='r',label="Ag")
+  plt.plot(xNew,power_smooth3,color='g',label="Ni")
+  plt.plot(xNew,power_smooth4,color='y',label="Cu")
+  plt.xlabel("Alpha Value")
+  plt.ylabel("Percent Composition")
+  plt.legend(loc="center left",bbox_to_anchor=(1,0.5))
   plt.show()
 
 makeSimpleGraph()
