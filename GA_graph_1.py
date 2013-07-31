@@ -24,14 +24,17 @@ def makeSimpleGraph():
 
   xValues = [float(element[4]) for element in lines if element[6]=='20']
   yValues = [float(element[3]) for element in lines if element[6]=='20']
+  xValues2 = [float(element[4]) for element in lines if element[6]!='20']
+  yValues2 = [float(element[3]) for element in lines if element[6]!='20']
 
-  print "oh hell no"
+
   print xValues[0],yValues[0]
   print xValues[1],yValues[1]
   print len(yValues)
 
   plt.title("Strength vs. Cost")
-  plt.scatter(xValues,yValues)
+  plt.scatter(xValues2,yValues2,color='r')
+  plt.scatter(xValues,yValues,color='b')
   plt.xlabel("Core Binding Strength")
   plt.ylabel("Cost ($/Gram)")
   plt.show()
