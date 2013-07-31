@@ -15,7 +15,7 @@ for alphaValue in subdirectories[:94]:
   averageLines = [line for line in readFile if len(line.split())==7]
   allLines = dataLines+averageLines
   for line in allLines:
-    line.append(alphaValue)
+    line += str(alphaValue)
   for line in allLines:
     compiledEnergies.writelines(str(line))
   os.chdir('..')
