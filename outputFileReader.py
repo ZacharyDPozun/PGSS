@@ -15,12 +15,23 @@ def readGeneticOutputText():
     if len(line)==2:
       generation = int(line[1])
     line.append(generation)
-    #line.append(str(parent))
 
   newLines = []
 
   newLines = [line for line in lines if (line[0]!='Average') and len(line)==7]
   generationAverages = []
+  averageLines = [line for line in lines if (line[0]=='Average')]
+  finalAverageList = []
+
+  for k in range(len(averageLines)):
+    tempList = []
+    tempList.append(float(averageLines[k][2][:-1]))
+    tempList.append(float(averageLines[k][6]))
+    tempList.append(averageLines[k][7])
+    finalAverageList.append(tempList)
+
+  for k in range(len(finalAverageList)):
+    finalAverageList[k].append(k/21)
 
   currentGeneration = 0
   currentAlpha = -1
@@ -35,25 +46,13 @@ def readGeneticOutputText():
     newLines[k][4] = float(newLines[k][4])
     newLines[k][5] = float(newLines[k][5])
     #newLines.append(currentGeneration)
-    newLines[k].append(currentAlpha)
+    #newLines[k].append(currentAlpha)
+    newLines[k].append(k/735)
 
-  currentGeneration = 0
-  currentAlpha = 0
-
-  for k in range(len(lines)):
-    if k%38==36:
-      line = [float(lines[k][2][:-1]),float(lines[k][6][:-1])]
-      line.append(currentGeneration%21)
-      currentGeneration += 1
-      line.append(k/834)
-      #line.append(int(parent))
-      generationAverages += [line]
-
-  generationAverages.remove(generationAverages[-1])
-
-  finalList = newLines + generationAverages
+  finalList = newLines + finalAverageList
 
   return finalList
+
 
 x = readGeneticOutputText()
 
