@@ -12,7 +12,7 @@ for alphaValue in subdirectories[:94]:
   os.chdir(str(alphaValue))
   readFile = open('Output.txt', mode = 'r')
   for line in readFile:
-    compiledEnergies.writelines(str(line))
+    compiledEnergies.write(str(line))
   os.chdir('..')
 
 compiledEnergies.close()
